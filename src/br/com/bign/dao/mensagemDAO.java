@@ -1,8 +1,11 @@
-package br.com.bign.nottag;
+package br.com.bign.dao;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.bign.ferramentas.meuBancoHelper;
+import br.com.bign.model.mensagem;
 
 
 

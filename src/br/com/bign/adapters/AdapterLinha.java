@@ -1,8 +1,9 @@
-package br.com.bign.nottag;
+package br.com.bign.adapters;
 
 import java.util.List;
 
 import br.bign.com.nottag.R;
+import br.com.bign.model.Nottag;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package br.com.bign.nottag;
+package br.com.bign.ferramentas;
 
 
 
@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.bign.com.nottag.R;
+import br.com.bign.dao.mensagemDAO;
 import br.com.bign.nottag.NOTActivity;
 
 import android.accounts.Account;

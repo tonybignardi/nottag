@@ -13,43 +13,56 @@ public final class R {
     public static final class drawable {
         public static final int cxx=0x7f020000;
         public static final int hash=0x7f020001;
-        public static final int ico_not_tag=0x7f020002;
+        public static final int hashminha=0x7f020002;
+        public static final int ico_not_tag=0x7f020003;
     }
     public static final class id {
-        public static final int adiciona=0x7f07000e;
-        public static final int botaoSalvar=0x7f070007;
-        public static final int campoNot=0x7f070006;
-        public static final int email=0x7f070011;
+        public static final int adiciona=0x7f070013;
+        public static final int botaoCriarHome=0x7f070001;
+        public static final int botaoSalvar=0x7f07000c;
+        public static final int botaoSalvarMinhaTag=0x7f07000a;
+        public static final int botaoSeguirHome=0x7f070002;
+        public static final int campoMinhaTag=0x7f070009;
+        public static final int campoNot=0x7f07000b;
+        public static final int criar=0x7f070019;
+        public static final int criatag=0x7f070014;
+        public static final int email=0x7f070017;
         public static final int emailtv=0x7f070000;
-        public static final int lNot=0x7f070004;
-        public static final int linhaMsgMsg=0x7f070003;
-        public static final int linhaMsgTitulo=0x7f070002;
-        public static final int linhaNot=0x7f070001;
-        public static final int notificacoes=0x7f070010;
-        public static final int parar=0x7f07000f;
-        public static final int sair=0x7f070013;
-        public static final int seguir=0x7f070012;
-        public static final int space1=0x7f07000c;
-        public static final int space2=0x7f070009;
-        public static final int verData=0x7f07000b;
-        public static final int verMensagem=0x7f07000d;
-        public static final int verNot=0x7f070008;
-        public static final int verTitulo=0x7f07000a;
-        public static final int webview=0x7f070005;
+        public static final int lNot=0x7f070007;
+        public static final int linhaMinha=0x7f070004;
+        public static final int linhaMsgMsg=0x7f070006;
+        public static final int linhaMsgTitulo=0x7f070005;
+        public static final int linhaNot=0x7f070003;
+        public static final int notificacoes=0x7f070016;
+        public static final int parar=0x7f070015;
+        public static final int sair=0x7f07001a;
+        public static final int seguir=0x7f070018;
+        public static final int space1=0x7f070011;
+        public static final int space2=0x7f07000e;
+        public static final int verData=0x7f070010;
+        public static final int verMensagem=0x7f070012;
+        public static final int verNot=0x7f07000d;
+        public static final int verTitulo=0x7f07000f;
+        public static final int webview=0x7f070008;
     }
     public static final class layout {
         public static final int email=0x7f030000;
-        public static final int linha=0x7f030001;
-        public static final int linhamsg=0x7f030002;
-        public static final int listamensagens=0x7f030003;
-        public static final int listatag=0x7f030004;
-        public static final int main=0x7f030005;
-        public static final int nottag=0x7f030006;
-        public static final int vermsg=0x7f030007;
+        public static final int home=0x7f030001;
+        public static final int linha=0x7f030002;
+        public static final int linhaminhas=0x7f030003;
+        public static final int linhamsg=0x7f030004;
+        public static final int listamensagens=0x7f030005;
+        public static final int listaminhas=0x7f030006;
+        public static final int listatag=0x7f030007;
+        public static final int main=0x7f030008;
+        public static final int minhatag=0x7f030009;
+        public static final int nottag=0x7f03000a;
+        public static final int vermsg=0x7f03000b;
     }
     public static final class menu {
         public static final int main=0x7f060000;
-        public static final int principal=0x7f060001;
+        public static final int menuminha=0x7f060001;
+        public static final int principal=0x7f060002;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

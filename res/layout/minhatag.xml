@@ -9,13 +9,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SEGUIR #NOTTAG"
+        android:text="CRIAR #NOTTAG"
         android:textSize="30sp"
-        android:textColor="#009933"
-        android:textStyle="bold" />
+        android:textColor="#F00" 
+        android:textStyle="bold"/>
     
     <EditText 
-        android:id="@+id/campoNot"
+        android:id="@+id/campoMinhaTag"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
          />
@@ -24,15 +24,14 @@
     
     <Button
         android:text="SALVAR"
-        android:id="@+id/botaoSalvar"
+        android:id="@+id/botaoSalvarMinhaTag"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFF"
-       android:background="#333399"
+       android:background="#F00"
         android:height="40sp"
         android:textSize="30sp"
         android:textStyle="bold"
-        
          />
 
 </LinearLayout>

@@ -13,7 +13,10 @@ import com.google.android.gms.ads.AdRequest;
 import android.accounts.Account;
 
 import br.bign.com.nottag.R;
-import br.com.bign.nottag.ntServico;
+import br.com.bign.dao.mensagemDAO;
+import br.com.bign.ferramentas.ntServico;
+import br.com.bign.listas.ListaMinhas;
+import br.com.bign.listas.ListaTag;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -26,28 +29,87 @@ import android.util.Patterns;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
+import android.view.View.OnClickListener;
 
 public class NOTActivity extends Activity {
     /** Called when the activity is first created. */
 	
 	private WebView myWebView;
-	 private AdView adView;
-	 private RelativeLayout rl;
+	
 	 public mensagemDAO cDao;
 	  /* Your ad unit id. Replace with your actual ad unit id. */
+	 
 	  private static final String AD_UNIT_ID = "ca-app-pub-5762417695769838/2855282502";
+	  private AdView adView;
+      private RelativeLayout rl;
+	  
+	  
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        myWebView = (WebView) findViewById(R.id.webview);
+        setContentView(R.layout.home);
+        /// inicio anuncios
+        
+        adView = new AdView(this);
+	    adView.setAdUnitId(AD_UNIT_ID);
+	    adView.setAdSize(AdSize.BANNER);
+	    
+	    AdRequest adRequest = new AdRequest.Builder()
+        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+        .addTestDevice("0123456789ABCDEF")
+        .build();
+	    
+	    adView.loadAd(adRequest);
+	
+
+	    rl = new RelativeLayout(this);
+	    rl.addView(adView);
+	    rl.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+	    rl.bringToFront();
+	    rl.setVisibility(RelativeLayout.INVISIBLE);
+	    
+	    this.addContentView(rl, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		rl.setVisibility(RelativeLayout.VISIBLE);
+		
+		//fim anuncios
+        
+        
+        
+        
+        Button btCria = (Button) findViewById(R.id.botaoCriarHome);
+        btCria.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(NOTActivity.this,ListaMinhas.class);
+				startActivity(i);
+				
+				
+			}
+		}) ;
+        
+        Button btSegue = (Button) findViewById(R.id.botaoSeguirHome);
+        btSegue.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(NOTActivity.this,ListaTag.class);
+				startActivity(i);
+				
+				
+			}
+		}) ;
+       
+        /* myWebView = (WebView) findViewById(R.id.webview);
         
 
         
@@ -83,26 +145,8 @@ public class NOTActivity extends Activity {
         	  });
         
         
-        adView = new AdView(this);
-	    adView.setAdUnitId(AD_UNIT_ID);
-	    adView.setAdSize(AdSize.BANNER);
-	    
-	    AdRequest adRequest = new AdRequest.Builder()
-        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-        .addTestDevice("0123456789ABCDEF")
-        .build();
-	    
-	    adView.loadAd(adRequest);
-	
-
-	    rl = new RelativeLayout(this);
-	    rl.addView(adView);
-	    rl.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
-	    rl.bringToFront();
-	    rl.setVisibility(RelativeLayout.INVISIBLE);
-	    
-	    this.addContentView(rl, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		rl.setVisibility(RelativeLayout.VISIBLE);
+        */
+    
 	   
 		
 	    /// SERVICO
@@ -203,6 +247,18 @@ public class NOTActivity extends Activity {
 
     		
       		Intent intent = new Intent(NOTActivity.this, ListaTag.class);
+
+			startActivity(intent);
+    		
+    		
+    		
+    	}
+      	
+    	if(item.getItemId()==R.id.criar)
+    	{
+
+    		
+      		Intent intent = new Intent(NOTActivity.this, ListaMinhas.class);
 
 			startActivity(intent);
     		

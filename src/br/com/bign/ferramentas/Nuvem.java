@@ -1,4 +1,4 @@
-package br.com.bign.nottag;
+package br.com.bign.ferramentas;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,9 @@ import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import br.com.bign.dao.MTagDAO;
+import br.com.bign.dao.NottagDAO;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -24,29 +27,32 @@ public class Nuvem  {
 		
 			
 	}
-	 public void insereTag(String not,Context contexto)
+	 public boolean podeSeguirTag(String not,Context c)
 	 {
 		 
-		 AccountManager am = AccountManager.get(contexto); 
-		 Account[] contas = am.getAccountsByType("com.google");
 		 
-		 HttpURLConnection con = null;
-			URL url_caminho;
-			String insere = "http://www.bign.com.br/nb/az.php?segue="+contas[0].name+"&nottag="+not;
-					
-			try {
-				url_caminho = new URL(insere);
-				con = (HttpURLConnection) url_caminho.openConnection();
-				readStream(con.getInputStream());
+		 AccountManager am = AccountManager.get(c); 
+ 		 Account[] contas = am.getAccountsByType("com.google");
+		 	try {	
+		 		
+		 		not=not.replace("#", "");
+		 		String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?segue="+contas[0].name+"&nottag="+not);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				if(json.get("PODE").equals("1"))
+					return true;
 				
-			} catch (Exception e) {
+				
+				
+			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			 
-			 //return resposta;
+		 	
+		 	return false;
 		 
+			 
 	 }
 	
 	 public void tagsQueSigo(Context c)
@@ -129,6 +135,62 @@ public class Nuvem  {
 	 
 			return sb.toString();
 	 
+	}
+	public void tagsQueCriei(Context c) {
+		// TODO Auto-generated method stub
+		
+		 AccountManager am = AccountManager.get(c); 
+ 		 Account[] contas = am.getAccountsByType("com.google");
+		 	try {	
+		 		
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?tags=criei&email="+contas[0].name);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				JSONArray todos = json.getJSONArray("tags");
+				MTagDAO cDao = new MTagDAO(c);
+				cDao.open();
+				
+				
+				for (int i = 0; i < todos.length(); i++) {
+				
+					cDao.create(todos.getString(i));
+
+				}
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	
+		
+	}
+	public boolean  podeInserirTag(String tag, Context c) {
+		
+		/// O REST TAMBEM INSERE SE PUDER
+		 AccountManager am = AccountManager.get(c); 
+ 		 Account[] contas = am.getAccountsByType("com.google");
+		 	try {	
+		 		
+		 		tag=tag.replace("#", "");
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=pode&nottag="+tag+"&email="+contas[0].name);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				if(json.get("PODE").equals("1"))
+					return true;
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	
+		 	return false;
+
+		
 	}
 
 

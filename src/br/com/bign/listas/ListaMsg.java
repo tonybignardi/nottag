@@ -1,8 +1,12 @@
-package br.com.bign.nottag;
+package br.com.bign.listas;
 
 import java.util.List;
 
 import br.bign.com.nottag.R;
+import br.com.bign.adapters.AdapterLinhaMsg;
+import br.com.bign.dao.mensagemDAO;
+import br.com.bign.model.mensagem;
+import br.com.bign.nottag.VerMsg;
 
 import android.os.Bundle;
 

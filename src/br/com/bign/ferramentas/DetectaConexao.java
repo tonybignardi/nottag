@@ -1,4 +1,4 @@
-package br.com.bign.nottag;
+package br.com.bign.ferramentas;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

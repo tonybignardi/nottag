@@ -1,8 +1,14 @@
-package br.com.bign.nottag;
+package br.com.bign.listas;
 
 import java.util.List;
 
 import br.bign.com.nottag.R;
+import br.com.bign.adapters.AdapterLinha;
+import br.com.bign.dao.NottagDAO;
+import br.com.bign.ferramentas.DetectaConexao;
+import br.com.bign.ferramentas.Nuvem;
+import br.com.bign.model.Nottag;
+import br.com.bign.nottag.SegueTag;
 
 import android.os.Bundle;
 
@@ -29,9 +35,18 @@ public class ListaTag extends ListActivity {
 		tags = cDao.getAll();
 		if(tags.isEmpty())
 		{
+			
+			DetectaConexao d = new DetectaConexao(this);
+			if(d.existeConexao())
+			{
 			Toast.makeText(ListaTag.this, "CARREGANDO TAGS...", Toast.LENGTH_SHORT).show();	
 			Nuvem n = new Nuvem();
 			n.tagsQueSigo(this);
+			}
+			else
+			{
+				Toast.makeText(ListaTag.this, "SEM CONEXAO..", Toast.LENGTH_SHORT).show();
+			}
 		
 		}
 	}

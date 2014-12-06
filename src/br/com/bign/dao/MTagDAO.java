@@ -1,8 +1,12 @@
-package br.com.bign.nottag;
+package br.com.bign.dao;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.bign.ferramentas.meuBancoHelper;
+import br.com.bign.model.MTag;
+import br.com.bign.model.Nottag;
 
 
 
@@ -14,13 +18,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 
 
-public class NottagDAO {
+public class MTagDAO {
 	
 	private SQLiteDatabase banco;
-	private String[] colunas={meuBancoHelper.TABELA_NOT_ID,"notSegue"};
+	private String[] colunas={meuBancoHelper.TABELA_MTAG_ID,"mtag"};
 	private meuBancoHelper BancoHelper;
 
-	public NottagDAO(Context contexto){
+	public MTagDAO(Context contexto){
 		
 		BancoHelper = new meuBancoHelper(contexto);
 	}
@@ -37,28 +41,29 @@ public class NottagDAO {
 	public void create(String not){
 		
 		ContentValues valores=new ContentValues();
-		valores.put("notSegue",not);
-		banco.insert(meuBancoHelper.TABELA_NOT,null,valores);
+		
+		valores.put("mtag",not.replace("#", ""));
+		banco.insert(meuBancoHelper.TABELA_MTAG,null,valores);
 		
 		
 	}
-	public void delete(Nottag c){
-		long id=c.getNottagId();
-		banco.delete(meuBancoHelper.TABELA_NOT,meuBancoHelper.TABELA_NOT_ID+"="+id,null);
+	public void delete(MTag c){
+		long id=c.getMtagId();
+		banco.delete(meuBancoHelper.TABELA_MTAG,meuBancoHelper.TABELA_MTAG_ID+"="+id,null);
 		
 		}
 	
 	
-	public List <Nottag> getAll () {
-		 List <Nottag > notes = new ArrayList <Nottag >() ;
+	public List <MTag> getAll () {
+		 List <MTag > notes = new ArrayList <MTag >() ;
 
-		 Cursor cursor = banco.query( meuBancoHelper .TABELA_NOT , colunas , null , null , null , null , "notSegue ASC",null);
+		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MTAG , colunas , null , null , null , null , "mtag ASC",null);
 		 
 		 cursor . moveToFirst ();
 		 while (! cursor.isAfterLast ()) {
-		 Nottag c = new Nottag();
-		 c.setNottagId(Integer.parseInt(cursor.getString (0)));
-		 c.setSegueNot( cursor.getString (1) );
+		 MTag c = new MTag();
+		 c.setMtagId(Integer.parseInt(cursor.getString (0)));
+		 c.setMtag( cursor.getString (1) );
 		 
 		 notes.add(c);
 		 cursor.moveToNext ();

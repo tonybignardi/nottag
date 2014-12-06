@@ -5,6 +5,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import br.bign.com.nottag.R;
+import br.com.bign.dao.MTagDAO;
 import br.com.bign.dao.NottagDAO;
 import br.com.bign.ferramentas.DetectaConexao;
 import br.com.bign.ferramentas.Nuvem;
@@ -21,9 +22,9 @@ import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 import android.view.View.OnClickListener;
 
-public class SegueTag extends Activity {
+public class CriaTag extends Activity {
 
-	private NottagDAO novoNotDAO;
+	private MTagDAO novoNotDAO;
 	public boolean podeInserir=false;
 	public Context _contexto;
 	
@@ -34,8 +35,7 @@ public class SegueTag extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.nottag);
-		
+		setContentView(R.layout.minhatag);
 		
   /// inicio anuncios
         
@@ -62,9 +62,9 @@ public class SegueTag extends Activity {
 		
 		//fim anuncios
 		
-		novoNotDAO = new NottagDAO(this);
+		novoNotDAO = new MTagDAO(this);
 		
-		final EditText tn = (EditText) findViewById(R.id.campoNot);
+		final EditText tn = (EditText) findViewById(R.id.campoMinhaTag);
 		
 		tn.setEnabled(true);
 		DetectaConexao dc = new DetectaConexao(this);
@@ -73,7 +73,7 @@ public class SegueTag extends Activity {
 		_contexto=this;
 		
 		
-		Button botao = (Button) findViewById(R.id.botaoSalvar);
+		Button botao = (Button) findViewById(R.id.botaoSalvarMinhaTag);
 		botao.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
@@ -86,35 +86,36 @@ public class SegueTag extends Activity {
 					if(!tn.getEditableText().toString().equals(""))
 					{
 						tn.setEnabled(false);
-						Toast.makeText(SegueTag.this, "VERIFICANDO...", Toast.LENGTH_LONG).show();
+						Toast.makeText(CriaTag.this, "VERIFICANDO...", Toast.LENGTH_LONG).show();
 						Nuvem n = new Nuvem();
-						
-						if(n.podeSeguirTag(tn.getEditableText().toString(),_contexto))
+						if(n.podeInserirTag(tn.getEditableText().toString(),_contexto))
 						{
 						
 						novoNotDAO.open();
 						novoNotDAO.create(tn.getEditableText().toString());
-						novoNotDAO.close();						
+						novoNotDAO.close();
+						
+						
 						finish();
 						}
 						else
 						{
-							Toast.makeText(SegueTag.this, "A TAG "+tn.getEditableText().toString()+
-									" AINDA NAO EXISTE", Toast.LENGTH_LONG).show();
+							Toast.makeText(CriaTag.this, "A TAG "+tn.getEditableText().toString()+
+									" JÁ POSSUI DONO..", Toast.LENGTH_LONG).show();
 							tn.setEnabled(true);
 							tn.setText("");
-						
 						}
+							
 					}
 					else
 					{
-						Toast.makeText(SegueTag.this, "CAMPO VAZIO", Toast.LENGTH_LONG).show();
+						Toast.makeText(CriaTag.this, "CAMPO VAZIO", Toast.LENGTH_LONG).show();
 					}
 				
 				}
 				else
 				{
-					Toast.makeText(SegueTag.this, "PROBLEMA DE CONEXÃO.. TENTE MAIS TARDE", Toast.LENGTH_LONG).show();
+					Toast.makeText(CriaTag.this, "PROBLEMA DE CONEXÃO.. TENTE MAIS TARDE", Toast.LENGTH_LONG).show();
 					
 				}
 				

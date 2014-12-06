@@ -1,8 +1,10 @@
-package br.com.bign.nottag;
+package br.com.bign.adapters;
 
 import java.util.List;
 
 import br.bign.com.nottag.R;
+import br.com.bign.model.MTag;
+import br.com.bign.model.Nottag;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,13 +14,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class AdapterLinhaMsg extends ArrayAdapter <mensagem> {
+public class AdapterLinhaMinha extends ArrayAdapter <MTag> {
 
 	private Context contexto;
-	private List<mensagem> dados;
-	public AdapterLinhaMsg(Context context, List  <mensagem> cs) {
+	private List<MTag> dados;
+	public AdapterLinhaMinha(Context context, List  <MTag> cs) {
 		
-		super(context, R.layout.linhamsg,cs);
+		super(context, R.layout.linhaminhas,cs);
 		contexto=context;
 		dados = cs;
 		// TODO Auto-generated constructor stub
@@ -29,12 +31,10 @@ public class AdapterLinhaMsg extends ArrayAdapter <mensagem> {
 		// TODO Auto-generated method stub
 		LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		 
-		 View visao = inflater.inflate(R.layout.linhamsg, parent, false);
-		 TextView tvtit = (TextView) visao.findViewById(R.id.linhaMsgTitulo);
-		 TextView tvmsg = (TextView) visao.findViewById(R.id.linhaMsgMsg);
+		 View visao = inflater.inflate(R.layout.linhaminhas, parent, false);
+		 TextView tvNot = (TextView) visao.findViewById(R.id.linhaMinha);
 		 
-		 tvtit.setText(dados.get(position).getTitulo());
-		 tvmsg.setText(dados.get(position).getMsg());
+		 tvNot.setText(dados.get(position).getMtag());
 		
 		 return visao;
 		

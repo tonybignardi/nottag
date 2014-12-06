@@ -1,4 +1,4 @@
-package br.com.bign.nottag;
+package br.com.bign.model;
 
 public class mensagem {
 	

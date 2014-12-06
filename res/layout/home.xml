@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#F9EDBD"
+    android:padding="10sp" >
+
+     <ImageView
+        android:src="@drawable/ico_not_tag"
+        android:layout_width="fill_parent"
+        android:layout_height="80sp" />
+    
+     
+       <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"
+         />
+     
+         
+    <Button
+        android:text="CRIE #NOTTAGS"
+        android:id="@+id/botaoCriarHome"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+       android:background="#F00"
+        android:height="40sp"
+        android:textStyle="bold"
+        android:textSize="30sp"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Divulgue para seguidores.... Você poderá enviar notificações pra eles.."
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:padding="5sp"
+         />
+    
+    
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="15sp"
+        android:textAlignment="center"
+         />
+     
+       <Button
+        android:text="SIGA #NOTTAGS"
+        android:id="@+id/botaoSeguirHome"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+       android:background="#333399"
+        android:height="40sp"
+        android:textStyle="bold"
+        android:textSize="30sp"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fique por dentro... sempre que o dono da tag postar"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:padding="5sp"
+         />
+  
+
+</LinearLayout>
