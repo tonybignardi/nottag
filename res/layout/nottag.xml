@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F9EDBD"
+    android:padding="10sp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#NOTTAG"
+        android:textSize="30sp"
+        android:textColor="#009933" />
+    
+    <EditText 
+        android:id="@+id/campoNot"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         />
+    
+     
+    
+    <Button
+        android:text="SALVAR"
+        android:id="@+id/botaoSalvar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+       android:background="#333399"
+        android:height="40sp"
+         />
+
+</LinearLayout>

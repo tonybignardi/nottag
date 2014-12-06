@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+ 
+    <item
+        android:id="@+id/parar"
+        android:title="Parar notificações"/>
+    
+     <item
+        android:id="@+id/notificacoes"
+        android:title="Ativar notificações"/>
+    
+     <item
+        android:id="@+id/email"
+        android:title="Email Cadastrado"/>
+   <item
+        android:id="@+id/seguir"
+        android:title="Seguir #nottags"/>
+     
+    <item
+        android:id="@+id/sair"
+        android:title="SAIR"/>
+
+</menu>

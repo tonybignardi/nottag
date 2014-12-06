@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F9EDBD"
+    android:padding="10sp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#NOTTAG"
+        android:textSize="30sp"
+        android:textColor="#009933"
+        android:id="@+id/verNot" />
+    
+       <TextView
+          android:id="@+id/space2"
+          android:layout_width="wrap_content"
+          android:layout_height="15sp"
+           />
+     
+     
+      
+      <TextView
+          android:id="@+id/verTitulo"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="titulo"
+          android:textColor="#333399"
+          android:textSize="20sp "
+          android:textStyle="bold|normal" />
+      
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="data"
+        android:textSize="15sp"
+        android:textColor="#333399"
+        android:id="@+id/verData" />
+
+      <TextView
+          android:id="@+id/space1"
+          android:layout_width="wrap_content"
+          android:layout_height="15sp"
+           />
+      
+        <TextView
+          android:id="@+id/verMensagem"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="texto"
+          android:textColor="#000"
+          android:textSize="15sp" />
+   
+
+</LinearLayout>
