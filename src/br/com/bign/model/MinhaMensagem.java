@@ -1,6 +1,6 @@
 package br.com.bign.model;
 
-public class mensagem {
+public class MinhaMensagem {
 	
 	private long mId;
 	private String nottag;
@@ -8,9 +8,8 @@ public class mensagem {
 	private String msg;
 	private String opcoes;
 	private String data;
-	private String idm;
-	private String dataresp;
-	private String resposta;
+	private long idm;
+	
 	
 	public String getTitulo() {
 		return titulo;
@@ -48,30 +47,14 @@ public class mensagem {
 	public void setData(String data) {
 		this.data = data;
 	}
-	public String getIdm() {
-		// TODO Auto-generated method stub
+	public long getIdm()
+	{
 		return idm;
 	}
-	public void setIdm(String idm)
-	{
-		this.idm=idm;
-	}
-	public void setResposta(String resp) {
+	public void setIdm(long idm) {
 		// TODO Auto-generated method stub
-		this.resposta = resp;
-	}
-	public void setDataResposta(String data) {
-		// TODO Auto-generated method stub
-		this.dataresp = data;
-	
-	}
-	public String getResposta()
-	{
-		return resposta;
-	}
-	public String getDataResposta()
-	{
-		return dataresp;
+		this.idm = idm;
+		
 	}
 	
 	

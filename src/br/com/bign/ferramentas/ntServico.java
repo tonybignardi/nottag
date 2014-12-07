@@ -18,7 +18,9 @@ import org.json.JSONObject;
 
 import br.bign.com.nottag.R;
 import br.com.bign.dao.mensagemDAO;
+import br.com.bign.listas.ListaMsg;
 import br.com.bign.nottag.NOTActivity;
+import br.com.bign.nottag.VerMsg;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -64,6 +66,7 @@ public class ntServico extends Service {
             }
 
         },0, 5000);
+    
         
     	
         
@@ -100,6 +103,7 @@ public class ntServico extends Service {
 		 String data = "";
 		 String nottag = "";
 		 String opcoes = "";
+		 String idnot="";
 		 int idM = 0;
 		 AccountManager am = AccountManager.get(this); 
  		 Account[] contas = am.getAccountsByType("com.google");
@@ -116,6 +120,7 @@ public class ntServico extends Service {
 				data = json.getString("DATA");
 				nottag = json.getString("NOTTAG");
 				opcoes = json.getString("OPCOES");
+				idnot = json.getString("IDNOT");
 				
 				
 				
@@ -131,10 +136,10 @@ public class ntServico extends Service {
 		 		cDao = new mensagemDAO(this); 
 		 		cDao.open();
 		 		
-		 		cDao.create(nottag,titulo,mensagem,opcoes,data);
+		 		cDao.create(nottag,titulo,mensagem,opcoes,data,idnot);
 		 		cDao.close();
 
-		 		criaNotificacao(nottag, titulo);
+		 		criaNotificacao("#"+nottag, titulo,data,mensagem,idM);
 		 		 
 		 		jaLeu("http://www.bign.com.br/nb/az.php?idm="+idM+"&email="+contas[0].name);
 		 	}
@@ -142,14 +147,9 @@ public class ntServico extends Service {
 		 
 		 //Url
 		 
-	    return Service.START_NOT_STICKY;
+	    return Service.START_STICKY;
 	    
 	  }
-	 private mensagemDAO mensagemDAO(Context context) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	 
 	 public void jaLeu(String url)
 	 {
@@ -216,28 +216,38 @@ public class ntServico extends Service {
 			return sb.toString();
 	 
 	}
-	 public void criaNotificacao(String titulo,String texto)
+	 public void criaNotificacao(String nottag,String titulo,String data,String msg,int idm)
 	 {
 		  
+			
 		 
-		PendingIntent iDepois = PendingIntent.getActivity(ntServico.this, 0, i, 0);
+		Intent iVer = new Intent(ntServico.this,ListaMsg.class);
+		iVer.putExtra("nottag",nottag.replace("#", ""));
+		PendingIntent iDepois = PendingIntent.getActivity(ntServico.this, 0, iVer, 0);
+		
+		
 		NotificationManager notGer = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 			
 			NotificationCompat.Builder  n = new NotificationCompat.Builder(this);
+			
+			
+			
 			n.setContentTitle(titulo);
-			n.setContentText(texto);
+			n.setContentText(nottag);
 			n.setSmallIcon(R.drawable.ico_not_tag);
 			n.setContentIntent(iDepois);
 			n.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-			long[] vibrate = { 0, 100, 200, 300 };
+			long[] vibrate = { 200, 200,200, 200 };
 			n.setVibrate(vibrate);
 			
 			//n.setSound(Uri.parse(R.raw.watch_this));
 			
 			//.addAction(R.drawable.ic_launcher, "acao1", iDepois)
 			//.build();
-					
-			notGer.notify(0,n.build());
+			
+			Random r = new Random();		
+			notGer.notify(r.nextInt(999999999),n.build());
+			
 	 }
 	 
 

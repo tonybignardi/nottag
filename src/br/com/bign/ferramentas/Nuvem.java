@@ -12,7 +12,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.bign.dao.MTagDAO;
+import br.com.bign.dao.MinhaMensagemDAO;
 import br.com.bign.dao.NottagDAO;
+import br.com.bign.dao.mensagemDAO;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -22,6 +24,9 @@ import android.content.Context;
 public class Nuvem  {
 
 	 
+	private String porque;
+	private long ultimoId;
+	private String ultimaData;
 	public Nuvem()
 	{
 		
@@ -40,6 +45,7 @@ public class Nuvem  {
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
+				porque=json.getString("PODE");
 				if(json.get("PODE").equals("1"))
 					return true;
 				
@@ -191,6 +197,129 @@ public class Nuvem  {
 		 	return false;
 
 		
+	}
+	public String getPorqueNao() {
+		
+		// TODO Auto-generated method stub
+		if(porque.equals("2"))
+		return "JASEGUE";
+		
+		return "";
+	}
+	public void notsQueCriei(Context c,String nottag) {
+		// TODO Auto-generated method stub
+		
+		 AccountManager am = AccountManager.get(c); 
+ 		 Account[] contas = am.getAccountsByType("com.google");
+		 	try {	
+		 		
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?tags=msg&email="+contas[0].name+"&nottag="+nottag);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				
+				
+				JSONArray nottags = json.getJSONArray("nottags");
+				JSONArray titulos = json.getJSONArray("titulos");
+				JSONArray mensagens = json.getJSONArray("mensagens");
+				JSONArray idms = json.getJSONArray("idms");
+				JSONArray opcoes = json.getJSONArray("opcoes");
+				JSONArray datas = json.getJSONArray("datas");
+				MinhaMensagemDAO cDao = new MinhaMensagemDAO(c);
+				cDao.open();
+				
+				
+				for (int i = 0; i < idms.length(); i++) {
+				
+					cDao.create(nottags.getString(i),titulos.getString(i),mensagens.getString(i),
+							opcoes.getString(i),datas.getString(i),idms.getLong(i));
+
+				}
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+	public boolean podeCriarNotificacao(String nottag, String titulo,
+			String msg, String opcoes, Context c) {
+		// TODO Auto-generated method stub
+		
+		AccountManager am = AccountManager.get(c); 
+		 Account[] contas = am.getAccountsByType("com.google");
+		 	try {	
+		 		
+		 		titulo=titulo.replace(" ", "+");
+		 		msg=msg.replace(" ", "+");
+		 		opcoes = opcoes.replace(" ", "+");
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=crianot&nottag="+nottag+"&email="+contas[0].name
+					 +"&titulo="+titulo+"&msg="+msg+"&opcoes="+opcoes);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				
+				this.ultimaData= json.getString("DATA");
+				this.ultimoId = json.getLong("IDM");
+				
+				if(ultimoId!=0)
+					return true;
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	
+		return false;
+	}
+	public long getUltimoId() {
+		// TODO Auto-generated method stub
+		return ultimoId;
+	}
+	public String getUltimaData() {
+		// TODO Auto-generated method stub
+		return ultimaData;
+	}
+	public CharSequence getMsgNaoPodeResponder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public boolean respondeNot(String resp, String idm,long idMensagem,Context c) {
+		// TODO Auto-generated method stub
+		AccountManager am = AccountManager.get(c); 
+		 Account[] contas = am.getAccountsByType("com.google");
+		 	try {	
+		 		
+
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?responder="+resp+"&idnot="+idm+"&email="+contas[0].name);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				
+				this.ultimaData= json.getString("DATA");
+				this.ultimoId = json.getLong("IDM");
+				
+				if(ultimoId!=0)
+				{
+					mensagemDAO mdao = new mensagemDAO(c);
+					mdao.open();
+					mdao.alteraResposta(idMensagem,resp,getUltimaData());
+					
+					return true;
+				
+				}
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	
+		return false;
 	}
 
 

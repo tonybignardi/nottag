@@ -12,6 +12,9 @@ public class meuBancoHelper extends SQLiteOpenHelper {
 	public static final String TABELA_MSG = "mensagem";
 	public static final String TABELA_MSG_ID = "mId";
 	
+	public static final String TABELA_MMSG = "mmsg";
+	public static final String TABELA_MMSG_ID = "mId";
+	
 	public static final String TABELA_MTAG = "mtag";
 	public static final String TABELA_MTAG_ID = "mtagId";
 		
@@ -35,7 +38,11 @@ public class meuBancoHelper extends SQLiteOpenHelper {
 		db.execSQL(BANCO_SQL);
 		
 		BANCO_SQL = "create table "+ TABELA_MSG+"("+TABELA_MSG_ID+" integer primary key autoincrement,";
-		BANCO_SQL +="nottag text not null,titulo text not null, msg text not null,opcoes text not null, data text not null);";
+		BANCO_SQL +="nottag text not null,titulo text not null, msg text not null,opcoes text not null, data text not null, idnot text, resposta text, dataresposta text);";
+		db.execSQL(BANCO_SQL);
+		
+		BANCO_SQL = "create table "+ TABELA_MMSG+"("+TABELA_MMSG_ID+" integer primary key autoincrement,";
+		BANCO_SQL +="nottag text not null,titulo text not null, msg text not null,opcoes text not null, data text not null, idm integer not null);";
 		db.execSQL(BANCO_SQL);
 		
 		BANCO_SQL = "create table "+ TABELA_MTAG+"("+TABELA_MTAG_ID+" integer primary key autoincrement,";
@@ -52,6 +59,7 @@ public class meuBancoHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABELA_NOT);
 		db.execSQL("DROP TABLE IF EXISTS " + TABELA_MSG);
 		db.execSQL("DROP TABLE IF EXISTS " + TABELA_MTAG);
+		db.execSQL("DROP TABLE IF EXISTS " + TABELA_MMSG);
 		
 		onCreate(db);
 		

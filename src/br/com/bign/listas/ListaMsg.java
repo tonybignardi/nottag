@@ -39,7 +39,7 @@ public class ListaMsg extends ListActivity {
 			{
 				nottag = extras.getString("nottag");
 				TextView tv = (TextView) findViewById(R.id.lNot);
-				tv.setText(nottag);
+				tv.setText("#"+nottag);
 				
 			}
 		}
@@ -74,6 +74,11 @@ public class ListaMsg extends ListActivity {
 		i.putExtra("titulo", c.getTitulo());
 		i.putExtra("data", c.getData());
 		i.putExtra("msg", c.getMsg());
+		i.putExtra("opcoes", c.getOpcoes());
+		i.putExtra("idm",c.getIdm());
+		i.putExtra("idmensagem", c.getmId());
+		i.putExtra("resposta", c.getResposta());
+		i.putExtra("dataresposta", c.getDataResposta());
 		startActivity(i);
 		
 		

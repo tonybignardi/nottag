@@ -5,6 +5,8 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import br.bign.com.nottag.R;
+import br.com.bign.dao.MTagDAO;
+import br.com.bign.dao.MinhaMensagemDAO;
 import br.com.bign.dao.NottagDAO;
 import br.com.bign.ferramentas.DetectaConexao;
 import br.com.bign.ferramentas.Nuvem;
@@ -17,28 +19,44 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 import android.view.View.OnClickListener;
 
-public class SegueTag extends Activity {
+public class CriaNot extends Activity {
 
-	private NottagDAO novoNotDAO;
+	private MinhaMensagemDAO novoNotDAO;
 	public boolean podeInserir=false;
 	public Context _contexto;
 	
 	  private static final String AD_UNIT_ID = "ca-app-pub-5762417695769838/2855282502";
 	  private AdView adView;
       private RelativeLayout rl;
+	private String nottag;
       
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.nottag);
-		
+		setContentView(R.layout.criaminhanot);
+
+		Bundle extras = getIntent().getExtras();
+		try
+		{
+			if(!extras.isEmpty())
+			{
+				nottag = extras.getString("nottag");
+				TextView tv = (TextView) findViewById(R.id.criaNottag);
+				tv.setText("#"+nottag);
+				
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
 		
   /// inicio anuncios
-        
+     /*   
         adView = new AdView(this);
 	    adView.setAdUnitId(AD_UNIT_ID);
 	    adView.setAdSize(AdSize.BANNER);
@@ -61,19 +79,24 @@ public class SegueTag extends Activity {
 		rl.setVisibility(RelativeLayout.VISIBLE);
 		
 		//fim anuncios
+		*/
+		novoNotDAO = new MinhaMensagemDAO(this);
 		
-		novoNotDAO = new NottagDAO(this);
 		
-		final EditText tn = (EditText) findViewById(R.id.campoNot);
+		final EditText tt = (EditText) findViewById(R.id.criaTitulo);
+		final EditText tm = (EditText) findViewById(R.id.criaMsg);
+		final EditText to = (EditText) findViewById(R.id.criaOpcoes);
 		
-		tn.setEnabled(true);
+		tt.setEnabled(true);
+		tm.setEnabled(true);
+		to.setEnabled(true);
 		DetectaConexao dc = new DetectaConexao(this);
 		if(dc.existeConexao())
 			podeInserir=true;
 		_contexto=this;
 		
 		
-		Button botao = (Button) findViewById(R.id.botaoSalvar);
+		Button botao = (Button) findViewById(R.id.criaSalvar);
 		botao.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
@@ -83,46 +106,50 @@ public class SegueTag extends Activity {
 				if(podeInserir)
 				{
 				
-					if(!tn.getEditableText().toString().equals(""))
+					if(!tt.getEditableText().toString().equals("") && !tm.getEditableText().toString().equals(""))
 					{
-						tn.setEnabled(false);
-						Toast.makeText(SegueTag.this, "VERIFICANDO...", Toast.LENGTH_LONG).show();
+						
+						tt.setEnabled(false);
+						tm.setEnabled(false);
+						to.setEnabled(false);
+						
+						Toast.makeText(CriaNot.this, "VERIFICANDO...", Toast.LENGTH_LONG).show();
 						Nuvem n = new Nuvem();
-						
-						if(n.podeSeguirTag(tn.getEditableText().toString(),_contexto))
+						if(n.podeCriarNotificacao(nottag,tt.getEditableText().toString(),
+								tm.getEditableText().toString(),to.getEditableText().toString(),_contexto))
 						{
-						
+						long idm= n.getUltimoId();
+						String udata = n.getUltimaData();
 						novoNotDAO.open();
-						novoNotDAO.create(tn.getEditableText().toString());
-						novoNotDAO.close();						
-						finish();
 						
+						novoNotDAO.create(nottag,tt.getEditableText().toString(),
+								tm.getEditableText().toString(),to.getEditableText().toString(),udata,idm);
+						novoNotDAO.close();
+						
+						
+						finish();
 						}
 						else
 						{
-							if(n.getPorqueNao().equals("JASEGUE"))
-							{
-							Toast.makeText(SegueTag.this, "ESSA TAG VOCÊ JA SEGUE", Toast.LENGTH_LONG).show();
-							}
-							else
-							{
-								Toast.makeText(SegueTag.this, "A TAG "+tn.getEditableText().toString()+
-										" AINDA NAO EXISTE", Toast.LENGTH_LONG).show();
-							}
-							tn.setEnabled(true);
-							tn.setText("");
-						
+							Toast.makeText(CriaNot.this, "A INSERÇÃO DESSA NOTIFICAÇÃO FOI BLOQUEADA", Toast.LENGTH_LONG).show();
+							tt.setEnabled(true);
+							tm.setEnabled(true);
+							to.setEnabled(true);
+							tt.setText("");
+							tm.setText("");
+							to.setText("");
 						}
+							
 					}
 					else
 					{
-						Toast.makeText(SegueTag.this, "CAMPO VAZIO", Toast.LENGTH_LONG).show();
+						Toast.makeText(CriaNot.this, "CAMPOS VAZIO", Toast.LENGTH_LONG).show();
 					}
 				
 				}
 				else
 				{
-					Toast.makeText(SegueTag.this, "PROBLEMA DE CONEXÃO.. TENTE MAIS TARDE", Toast.LENGTH_LONG).show();
+					Toast.makeText(CriaNot.this, "PROBLEMA DE CONEXÃO.. TENTE MAIS TARDE", Toast.LENGTH_LONG).show();
 					
 				}
 				

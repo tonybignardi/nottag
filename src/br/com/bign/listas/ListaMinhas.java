@@ -79,11 +79,12 @@ public class ListaMinhas extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
 
-		Nottag c =(Nottag) l.getItemAtPosition(position); 
+		MTag c =(MTag) l.getItemAtPosition(position); 
 	
-		Intent i = new Intent(ListaMinhas.this,ListaMsg.class);
-		i.putExtra("nottag", c.getSegueNot());
+		Intent i = new Intent(ListaMinhas.this,ListaMMensagem.class);
+		i.putExtra("nottag", c.getMtag());
 		startActivity(i);
+		
 		
 		
 	}

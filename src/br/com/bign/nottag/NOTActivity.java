@@ -2,37 +2,25 @@ package br.com.bign.nottag;
 
 
 
-import java.util.Calendar;
-import java.util.regex.Pattern;
-
-
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdRequest; 
-
-import android.accounts.Account;
 
 import br.bign.com.nottag.R;
 import br.com.bign.dao.mensagemDAO;
 import br.com.bign.ferramentas.ntServico;
 import br.com.bign.listas.ListaMinhas;
 import br.com.bign.listas.ListaTag;
-import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;

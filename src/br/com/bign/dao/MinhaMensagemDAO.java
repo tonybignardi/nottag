@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.bign.ferramentas.meuBancoHelper;
-import br.com.bign.model.mensagem;
+import br.com.bign.model.MinhaMensagem;
 
 
 
@@ -17,13 +17,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 
 
-public class mensagemDAO {
+public class MinhaMensagemDAO {
 	
 	private SQLiteDatabase banco;
-	private String[] colunas={meuBancoHelper.TABELA_MSG_ID,"nottag","titulo","msg","opcoes","data","idnot","resposta","dataresposta"};
+	private String[] colunas={meuBancoHelper.TABELA_MMSG_ID,"nottag","titulo","msg","opcoes","data","idm"};
 	private meuBancoHelper BancoHelper;
 
-	public mensagemDAO(Context contexto){
+	public MinhaMensagemDAO(Context contexto){
 		
 		BancoHelper = new meuBancoHelper(contexto);
 	}
@@ -37,7 +37,7 @@ public class mensagemDAO {
 	// TODO Auto-generated method stub
 		BancoHelper.close();
 	}
-	public void create(String not,String titulo, String msg, String opcoes,String data,String idnot){
+	public void create(String not,String titulo, String msg, String opcoes,String data,long idm){
 		
 		ContentValues valores=new ContentValues();
 		valores.put("nottag",not);
@@ -45,41 +45,35 @@ public class mensagemDAO {
 		valores.put("msg",msg);
 		valores.put("opcoes",opcoes);
 		valores.put("data", data);
-		valores.put("idnot", idnot);
-		valores.put("resposta", "");
-		valores.put("dataresposta", "");
-		
-		banco.insert(meuBancoHelper.TABELA_MSG,null,valores);
+		valores.put("idm",idm);
+		banco.insert(meuBancoHelper.TABELA_MMSG,null,valores);
 		
 		
 		
 	}
-	public void delete(mensagem c){
+	public void delete(MinhaMensagem c){
 		long id=c.getmId();
-		banco.delete(meuBancoHelper.TABELA_MSG,meuBancoHelper.TABELA_MSG_ID+"="+id,null);
-		
+		banco.delete(meuBancoHelper.TABELA_MMSG,meuBancoHelper.TABELA_MMSG_ID+"="+id,null);
 		
 		}
 	
 	
-	public List <mensagem> getAll () {
-		 List <mensagem > notes = new ArrayList <mensagem >() ;
+	public List <MinhaMensagem> getAll () {
+		 List <MinhaMensagem > notes = new ArrayList <MinhaMensagem >() ;
 
-		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MSG , colunas , null , null , null , null , "mId DESC",null);
+		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MMSG , colunas , null , null , null , null , "mId DESC",null);
 		 
 		 cursor . moveToFirst ();
 		 while (! cursor.isAfterLast ()) {
 			 
-			 mensagem c = new mensagem();
+			 MinhaMensagem c = new MinhaMensagem();
 			 c.setmId(Integer.parseInt(cursor.getString (0)));
 			 c.setNottag(cursor.getString (1) );
 			 c.setTitulo(cursor.getString(2));
 			 c.setMsg(cursor.getString(3));
 			 c.setOpcoes(cursor.getString(4));
 			 c.setData(cursor.getString(5));
-			 c.setIdm(cursor.getString(6));
-			 c.setResposta(cursor.getString(7));
-			 c.setDataResposta(cursor.getString(8));
+			 c.setIdm(Integer.parseInt(cursor.getString (6)));
 		 
 		 
 			 notes.add(c);
@@ -90,26 +84,24 @@ public class mensagemDAO {
 		 
 		 return notes;
 		 }
-	public List<mensagem> getAllWhereTag(String nottag) {
+	public List<MinhaMensagem> getAllWhereTag(String nottag) {
 		// TODO Auto-generated method stub
 		
-		 List <mensagem > notes = new ArrayList <mensagem >() ;
+		 List <MinhaMensagem > notes = new ArrayList <MinhaMensagem >() ;
 
-		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MSG , colunas , "nottag='"+nottag+"'" , null , null , null , "mId DESC",null);
+		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MMSG , colunas , "nottag='"+nottag+"'" , null , null , null , "mId DESC",null);
 		 
 		 cursor . moveToFirst ();
 		 while (! cursor.isAfterLast ()) {
 			 
-			 mensagem c = new mensagem();
+			 MinhaMensagem c = new MinhaMensagem();
 			 c.setmId(Integer.parseInt(cursor.getString (0)));
 			 c.setNottag(cursor.getString (1) );
 			 c.setTitulo(cursor.getString(2));
 			 c.setMsg(cursor.getString(3));
 			 c.setOpcoes(cursor.getString(4));
 			 c.setData(cursor.getString(5));
-			 c.setIdm(cursor.getString(6));
-			 c.setResposta(cursor.getString(7));
-			 c.setDataResposta(cursor.getString(8));
+			 c.setIdm(Integer.parseInt(cursor.getString (6)));
 		 
 		 
 			 notes.add(c);
@@ -119,19 +111,9 @@ public class mensagemDAO {
 		 
 		 
 		 return notes;
-	}
-	public void alteraResposta(long  idMensagem, String resp, String ultimaData) {
-		// TODO Auto-generated method stub
-
-		ContentValues valores=new ContentValues();
-		
-		valores.put("resposta",resp);
-		valores.put("dataresposta", ultimaData);
-		
-		banco.update(meuBancoHelper.TABELA_MSG, valores, meuBancoHelper.TABELA_MSG_ID+"="+idMensagem, null);
-		
 	}
 	
 	
 }
+
 

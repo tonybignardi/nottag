@@ -50,6 +50,11 @@
                 <activity android:name="br.com.bign.listas.ListaMinhas"
                   ></activity>
                 
+                  <activity android:name="br.com.bign.listas.ListaMMensagem"
+                  ></activity>
+                    <activity android:name="br.com.bign.nottag.CriaNot"
+                  ></activity>
+                
                    
              <service android:enabled="true" android:name="br.com.bign.ferramentas.ntServico"
              />
