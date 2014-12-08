@@ -15,11 +15,13 @@ import br.com.bign.dao.MTagDAO;
 import br.com.bign.dao.MinhaMensagemDAO;
 import br.com.bign.dao.NottagDAO;
 import br.com.bign.dao.mensagemDAO;
+import br.com.bign.nottag.VerNot;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
+import android.widget.Toast;
 
 public class Nuvem  {
 
@@ -27,6 +29,7 @@ public class Nuvem  {
 	private String porque;
 	private long ultimoId;
 	private String ultimaData;
+	private int totalresp;
 	public Nuvem()
 	{
 		
@@ -320,6 +323,78 @@ public class Nuvem  {
 			}
 		 	
 		return false;
+	}
+	public String contaSeguidores(String nottag,Context c) {
+		// TODO Auto-generated method stub
+		
+		AccountManager am = AccountManager.get(c); 
+		 Account[] contas = am.getAccountsByType("com.google");
+		 	try {	
+		 		
+
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?contar="+nottag+"&email="+contas[0].name);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				
+				return json.getString("TOTAL");
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	
+		return "##";
+		
+	}
+	public int[] contaRespostas(long idm, Context c) {
+		// TODO Auto-generated method stub
+		
+		String resps[] = null;
+		AccountManager am = AccountManager.get(c); 
+		 Account[] contas = am.getAccountsByType("com.google");
+		 	try {	
+
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?contaresp="+idm+"&email="+contas[0].name);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				JSONArray todos = json.getJSONArray("respostas");
+				
+				totalresp = json.getInt("total");
+				
+				
+				
+				//Toast.makeText(c, "tam "+todos.length(), Toast.LENGTH_LONG).show();
+				//Toast.makeText(c, "jso "+json.getString("respostas"), Toast.LENGTH_LONG).show();
+				resps = new String[todos.length()];
+				
+				for(int i = 0;i<todos.length();i++)
+					resps[i]=todos.getString(i);
+				
+				int r[] = new int[todos.length()];
+				
+				for(int i = 0;i<todos.length();i++)
+					r[i]=Integer.parseInt(resps[i]);
+				
+				return r;
+				
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	
+		return null;
+		
+	}
+	public int getTotalresp() {
+		// TODO Auto-generated method stub
+		return totalresp;
 	}
 
 

@@ -221,7 +221,7 @@ public class ntServico extends Service {
 		  
 			
 		 
-		Intent iVer = new Intent(ntServico.this,ListaMsg.class);
+		Intent iVer = new Intent(ntServico.this,ListaMsg.class); 
 		iVer.putExtra("nottag",nottag.replace("#", ""));
 		PendingIntent iDepois = PendingIntent.getActivity(ntServico.this, 0, iVer, 0);
 		

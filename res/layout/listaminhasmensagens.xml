@@ -25,6 +25,16 @@
         android:textAlignment="gravity"
         android:id="@+id/lMMsgNot"
         android:textSize="15sp" />
+        
+          <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Você possui ## seguidores "
+        android:textColor="#333399"
+        android:textAlignment="gravity"
+        android:id="@+id/lMMcontador"
+        android:textSize="15sp"
+		android:textStyle="bold"/>
 
     <ListView
         android:id="@android:id/list"

@@ -143,8 +143,11 @@ public class VerMsg extends Activity {
 					                            	 {
 					                            		 
 					                            		 btnAcessado.setBackgroundColor(Color.RED);
-					                            		 Toast.makeText(VerMsg.this, "RESPOSTA ENVIADA... OBRIGADO", Toast.LENGTH_LONG).show();
+					                            		 
+					                            		 Toast.makeText(VerMsg.this, "RESPOSTA "+ops[iMagico]+" ENVIADA... OBRIGADO", Toast.LENGTH_LONG).show();
 					                            		 finish();
+					                            		 
+					                            		 //
 					                            		 
 					                            	 }
 					                            	 else

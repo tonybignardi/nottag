@@ -7,8 +7,10 @@ import br.com.bign.adapters.AdapterLinhaMMsg;
 import br.com.bign.dao.MinhaMensagemDAO;
 import br.com.bign.ferramentas.DetectaConexao;
 import br.com.bign.ferramentas.Nuvem;
+import br.com.bign.model.MTag;
 import br.com.bign.model.MinhaMensagem;
 import br.com.bign.nottag.CriaNot;
+import br.com.bign.nottag.VerNot;
 import android.os.Bundle;
 
 import android.app.ListActivity;
@@ -52,11 +54,12 @@ public class ListaMMensagem extends ListActivity {
 		
 		
 		
+		DetectaConexao d = new DetectaConexao(this);
 		if(tags.isEmpty())
 		{
 			
 			
-			DetectaConexao d = new DetectaConexao(this);
+		
 			if(d.existeConexao())
 			{
 			Toast.makeText(ListaMMensagem.this, "CARREGANDO MINHAS #NOTS...", Toast.LENGTH_SHORT).show();
@@ -70,6 +73,18 @@ public class ListaMMensagem extends ListActivity {
 				
 		
 		}
+		
+		if(d.existeConexao())
+		{
+			Nuvem nu = new Nuvem();
+			String segui = nu.contaSeguidores(nottag,ListaMMensagem.this);
+			TextView tvcont = (TextView) findViewById(R.id.lMMcontador);
+			tvcont.setText("Você possui "+segui+" seguidores");
+			
+			
+		}
+		
+		
 	}
 
 	@Override
@@ -94,12 +109,21 @@ public class ListaMMensagem extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
 
-	/*	Nottag c =(Nottag) l.getItemAtPosition(position); 
+		MinhaMensagem c =(MinhaMensagem) l.getItemAtPosition(position); 
 	
-		Intent i = new Intent(ListaMinhas.this,ListaMsg.class);
-		i.putExtra("nottag", c.getSegueNot());
+		Intent i = new Intent(ListaMMensagem.this,VerNot.class);
+		
+		i.putExtra("nottag", c.getNottag());
+		i.putExtra("titulo", c.getTitulo());
+		i.putExtra("data",c.getData());
+		i.putExtra("msg", c.getMsg());
+		i.putExtra("opcoes", c.getOpcoes());
+		i.putExtra("idm",c.getIdm());
+		
 		startActivity(i);
-		*/
+		
+		
+		
 		
 		
 	}
