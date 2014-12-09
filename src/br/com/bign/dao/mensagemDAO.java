@@ -20,7 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class mensagemDAO {
 	
 	private SQLiteDatabase banco;
-	private String[] colunas={meuBancoHelper.TABELA_MSG_ID,"nottag","titulo","msg","opcoes","data","idnot","resposta","dataresposta"};
+	private String[] colunas={meuBancoHelper.TABELA_MSG_ID,"nottag","titulo","msg","opcoes","data","idnot","resposta","dataresposta","temfoto"};
 	private meuBancoHelper BancoHelper;
 
 	public mensagemDAO(Context contexto){
@@ -37,7 +37,7 @@ public class mensagemDAO {
 	// TODO Auto-generated method stub
 		BancoHelper.close();
 	}
-	public void create(String not,String titulo, String msg, String opcoes,String data,String idnot){
+	public void create(String not,String titulo, String msg, String opcoes,String data,String idnot,String temfoto){
 		
 		ContentValues valores=new ContentValues();
 		valores.put("nottag",not);
@@ -48,6 +48,7 @@ public class mensagemDAO {
 		valores.put("idnot", idnot);
 		valores.put("resposta", "");
 		valores.put("dataresposta", "");
+		valores.put("temfoto", temfoto);
 		
 		banco.insert(meuBancoHelper.TABELA_MSG,null,valores);
 		
@@ -80,6 +81,7 @@ public class mensagemDAO {
 			 c.setIdm(cursor.getString(6));
 			 c.setResposta(cursor.getString(7));
 			 c.setDataResposta(cursor.getString(8));
+			 c.setTemFoto(cursor.getString(9));
 		 
 		 
 			 notes.add(c);
@@ -110,6 +112,7 @@ public class mensagemDAO {
 			 c.setIdm(cursor.getString(6));
 			 c.setResposta(cursor.getString(7));
 			 c.setDataResposta(cursor.getString(8));
+			 c.setTemFoto(cursor.getString(9));
 		 
 		 
 			 notes.add(c);
@@ -129,6 +132,31 @@ public class mensagemDAO {
 		valores.put("dataresposta", ultimaData);
 		
 		banco.update(meuBancoHelper.TABELA_MSG, valores, meuBancoHelper.TABELA_MSG_ID+"="+idMensagem, null);
+		
+	}
+	public void alteraTemFoto(long idm) {
+		// TODO Auto-generated method stub
+		
+ContentValues valores=new ContentValues();
+		
+		valores.put("temfoto","S");
+		
+		banco.update(meuBancoHelper.TABELA_MSG, valores, "idnot="+idm, null);
+		
+	}
+	public String temFoto(long idm) {
+		// TODO Auto-generated method stub
+
+		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MSG , colunas , "idnot='"+idm+"'" , null , null , null , "mId DESC",null);
+		 cursor . moveToFirst ();
+		 while (! cursor.isAfterLast ()) {
+			 
+			if(cursor.getString(9).equals("S"))
+				return "S";
+			 
+		 }
+		 
+		 return "";
 		
 	}
 	

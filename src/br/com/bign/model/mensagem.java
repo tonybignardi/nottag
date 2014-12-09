@@ -11,6 +11,7 @@ public class mensagem {
 	private String idm;
 	private String dataresp;
 	private String resposta;
+	private String temfoto;
 	
 	public String getTitulo() {
 		return titulo;
@@ -72,6 +73,15 @@ public class mensagem {
 	public String getDataResposta()
 	{
 		return dataresp;
+	}
+	public String getTemFoto()
+	{
+		return temfoto;
+				
+	}
+	public void setTemFoto(String temfoto) {
+		// TODO Auto-generated method stub
+		this.temfoto=temfoto;
 	}
 	
 	

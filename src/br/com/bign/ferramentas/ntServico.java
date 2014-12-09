@@ -104,6 +104,7 @@ public class ntServico extends Service {
 		 String nottag = "";
 		 String opcoes = "";
 		 String idnot="";
+		 String temfoto="";
 		 int idM = 0;
 		 AccountManager am = AccountManager.get(this); 
  		 Account[] contas = am.getAccountsByType("com.google");
@@ -121,6 +122,7 @@ public class ntServico extends Service {
 				nottag = json.getString("NOTTAG");
 				opcoes = json.getString("OPCOES");
 				idnot = json.getString("IDNOT");
+				temfoto = json.getString("TEMFOTO");
 				
 				
 				
@@ -136,7 +138,7 @@ public class ntServico extends Service {
 		 		cDao = new mensagemDAO(this); 
 		 		cDao.open();
 		 		
-		 		cDao.create(nottag,titulo,mensagem,opcoes,data,idnot);
+		 		cDao.create(nottag,titulo,mensagem,opcoes,data,idnot,temfoto); 
 		 		cDao.close();
 
 		 		criaNotificacao("#"+nottag, titulo,data,mensagem,idM);
@@ -151,7 +153,7 @@ public class ntServico extends Service {
 	    
 	  }
 	 
-	 public void jaLeu(String url)
+	 public static void jaLeu(String url)
 	 {
 		 HttpURLConnection con = null;
 			URL url_caminho;
@@ -188,7 +190,7 @@ public class ntServico extends Service {
 		 return resposta;
 		 
 	 }
-	 public String readStream(InputStream is)
+	 public static String readStream(InputStream is)
 	 {
 		 BufferedReader br = null;
 			StringBuilder sb = new StringBuilder();

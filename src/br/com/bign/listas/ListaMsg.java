@@ -79,6 +79,7 @@ public class ListaMsg extends ListActivity {
 		i.putExtra("idmensagem", c.getmId());
 		i.putExtra("resposta", c.getResposta());
 		i.putExtra("dataresposta", c.getDataResposta());
+		i.putExtra("temfoto", c.getTemFoto());
 		startActivity(i);
 		
 		

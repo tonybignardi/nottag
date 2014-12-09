@@ -247,7 +247,7 @@ public class Nuvem  {
 		
 	}
 	public boolean podeCriarNotificacao(String nottag, String titulo,
-			String msg, String opcoes, Context c) {
+			String msg, String opcoes,String foto, Context c) {
 		// TODO Auto-generated method stub
 		
 		AccountManager am = AccountManager.get(c); 
@@ -258,7 +258,7 @@ public class Nuvem  {
 		 		msg=msg.replace(" ", "+");
 		 		opcoes = opcoes.replace(" ", "+");
 			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=crianot&nottag="+nottag+"&email="+contas[0].name
-					 +"&titulo="+titulo+"&msg="+msg+"&opcoes="+opcoes);
+					 +"&titulo="+titulo+"&msg="+msg+"&opcoes="+opcoes+"&foto="+foto);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
@@ -396,6 +396,8 @@ public class Nuvem  {
 		// TODO Auto-generated method stub
 		return totalresp;
 	}
+	
+	
 
 
 }

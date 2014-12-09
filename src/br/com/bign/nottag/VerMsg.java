@@ -4,6 +4,7 @@ package br.com.bign.nottag;
 
 import br.bign.com.nottag.R;
 import br.com.bign.ferramentas.DetectaConexao;
+import br.com.bign.ferramentas.DownloadImageTask;
 import br.com.bign.ferramentas.Nuvem;
 import android.view.View.OnClickListener;
 import android.R.color;
@@ -17,6 +18,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +54,7 @@ public class VerMsg extends Activity {
 				String opcoes = extras.getString("opcoes");
 				String dataresp = extras.getString("dataresposta");
 				String resp = extras.getString("resposta");
+				String temfoto = extras.getString("temfoto");
 				final String idm = extras.getString("idm");
 				final long idmensagem = extras.getLong("idmensagem");
 				
@@ -72,6 +75,18 @@ public class VerMsg extends Activity {
 					TextView tdr = (TextView) findViewById(R.id.verDataResp);
 					tdr.setText("Respondido em "+dataresp);
 				}
+				
+				// Toast.makeText(VerMsg.this, temfoto, Toast.LENGTH_LONG).show();
+				if(temfoto.equals("S"))
+				{
+					ImageView iv = (ImageView) findViewById(R.id.imagemNot);
+					iv.setVisibility(ImageView.VISIBLE);
+					new DownloadImageTask(iv).execute("" +
+							"http://bign.com.br/b/dothumb.php?img=arquivos/"+idm+".jpg&w=400");
+					
+				}
+				
+				
 				if(!opcoes.equals(""))
 				{
 					

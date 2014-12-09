@@ -3,26 +3,25 @@ package br.com.bign.nottag;
 
 
 import br.bign.com.nottag.R;
+
+import br.com.bign.dao.mensagemDAO;
 import br.com.bign.ferramentas.DetectaConexao;
+import br.com.bign.ferramentas.DownloadImageTask;
 import br.com.bign.ferramentas.Nuvem;
-import android.view.View.OnClickListener;
-import android.R.color;
 import android.annotation.SuppressLint;
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.webkit.WebViewClient;
 
 public class VerNot extends Activity {
 	private boolean podeInserir=false;
+	private WebView myWebView;
+	private mensagemDAO mdao;
 
 	@SuppressLint("InlinedApi")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,51 @@ public class VerNot extends Activity {
 				String opcoes = extras.getString("opcoes");
 				long idm = extras.getLong("idm");
 				int totalResp=0;
+				
+				 mdao = new mensagemDAO(VerNot.this);
+				 
+			/*	if(mdao.temFoto(idm).equals("S"))
+				{
+					ImageView iv = (ImageView) findViewById(R.id.imagemVerNot);
+					iv.setVisibility(ImageView.VISIBLE);
+					new DownloadImageTask(iv).execute("" +
+							"http://bign.com.br/b/dothumb.php?img=arquivos/"+idm+".jpg&w=400");
+					
+				}
+				*/
+				
+				
 		
+				
+	//new DownloadImageTask((ImageView) findViewById(R.id.imgTeste)).execute("http://bign.com.br/nb/img/bign_pequeno.png");
+	
+				
+				
+				
+				
+				
+				 myWebView = (WebView) findViewById(R.id.webvernot);
+		        
+
+		        
+		        WebSettings settings = myWebView.getSettings();
+		        //Faz os links abrirem na mesma webview
+		        settings.setLoadWithOverviewMode(true);
+		        //ignora o view port da pagina
+		        settings.setUseWideViewPort(false);
+		        //ativa o uso de javascript
+		        settings.setJavaScriptEnabled(true);
+		        //desabilita os controles de zoom
+		        settings.setBuiltInZoomControls(false);
+		        //desabilita o zoom de dois taps e o zoom de caixas de texto
+		        settings.setSupportZoom(false);
+		        //deixa o zoom inicial como longe
+		        //settings.setDefaultZoom(ZoomDensity.FAR);
+		       
+		    
+		        
+		        
+		    
 				
 				DetectaConexao d = new DetectaConexao(this);
 				int contResp[]=null;
@@ -60,6 +103,26 @@ public class VerNot extends Activity {
 					contResp = n.contaRespostas(idm,this);
 					totalResp=n.getTotalresp();
 					
+					 myWebView.loadUrl("http://bign.com.br/nb/grafico.php?contaresp="+idm);
+				        
+				        myWebView.setWebViewClient(new WebViewClient() {
+				        	 
+				        	   @Override
+				        	   public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				        	    view.loadUrl(url);
+				        	    return true;
+				        	   }
+				        	   //Em caso de erro recebido exibimos um html interno 
+				        	   public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+				        		   myWebView.loadUrl("file:///android_asset/erro.html");
+				        	    //ouPodemos simplesmente ocultar a wv
+				        	    //wv.setVisibility(View.GONE);
+				        	   }
+				        	  });
+					
+				   
+			        
+					
 					
 				}
 				else
@@ -68,7 +131,7 @@ public class VerNot extends Activity {
 					finish();
 					
 				}
-				Toast.makeText(VerNot.this, "tot "+totalResp, Toast.LENGTH_LONG).show();
+
 				
 				TextView tvn = (TextView) findViewById(R.id.vernotNot);
 				tvn.setText("#"+nottag);
@@ -85,71 +148,7 @@ public class VerNot extends Activity {
 
 
 				
-				if(!opcoes.equals(""))
-				{
-					
-					 
-					final String[] ops = opcoes.split(" ");
-					
-					
-					LinearLayout ll = (LinearLayout) findViewById(R.id.vernotaddBotoes);
-					
-					
-					
-
-					for (int i=0;i<ops.length;i++)
-					{
-						 Button btn=new Button(this);
-						
-						 
-						 int p=0;
-						 if(totalResp!=0)
-							 p=(contResp[i]/totalResp)*100;
-						 
-
-						 int porc = 20;	
-						 if(p!=0)
-						 porc = p*(4);
-						 
-					
-						 
-						 
-						 btn.setId(i);
-					//	 if
-						 btn.setText(ops[i]+" ("+contResp[i]+") - "+p+"%");
-					
-						
-						
-						btn.setBackgroundColor(Color.parseColor("#333399"));
-						
-						
-						
-						
-						 
-						 btn.setTextColor(Color.WHITE);
-						 
-						 
-						
-						 //btn.setWidth(ll.getWidth());
-						 
-						btn.setWidth(porc);
-						Toast.makeText(VerNot.this, "p"+i+"-"+porc, Toast.LENGTH_LONG).show();
-						 
-						 
-						 TextView tv = new TextView(this);
-						 tv.setHeight(20);
-						 
-												 
-						 
-					     ll.addView(btn);
-						 ll.addView(tv);
-						 
-					}
-					
-				}
-				
-				
-				
+								
 			}
 		}
 		catch (Exception e) {
