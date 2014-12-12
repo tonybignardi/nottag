@@ -177,10 +177,13 @@ public class CriaNot extends Activity {
 
 							// CARREGANDO ARQUIVO
 
-						//	dialog = ProgressDialog.show(CriaNot.this, "",	"Uploading file...", true);
+							
+							
 
 							if(!localArquivo.equals(""))
 							{
+							dialog = ProgressDialog.show(CriaNot.this, "",	"Carregando arquivo...", true);
+								
 							new Thread(new Runnable() {
 								
 

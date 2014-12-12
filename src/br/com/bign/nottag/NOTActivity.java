@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
@@ -153,7 +154,13 @@ public class NOTActivity extends Activity {
 		  //  Toast.makeText(CXMActivity.this, "CONSTRUIU", Toast.LENGTH_LONG).show();
 		
 		  
+	    
 	    startService(intent);
+	    
+	  //  ImageView iv = (ImageView) findViewById(R.id.iconeHome);
+	  //  iv.setImageBitmap(ntServico.getBitmapFromURL("http://bign.com.br/b/dothumb.php?img=arquivos/1180.jpg&w=100"));
+	    
+	    
 	    
 	  
 	    
@@ -200,13 +207,14 @@ public class NOTActivity extends Activity {
     	{
     		
 
-    		Intent intent = new Intent(NOTActivity.this, ntServico.class);
+    		/*Intent intent = new Intent(NOTActivity.this, ntServico.class);
 			// PendingIntent pintent = PendingIntent.getService(CXMActivity.this, 0, intent, 0);
 			
 			//AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 			//alarm.cancel(pintent);
 			Toast.makeText(NOTActivity.this, "VOCE NÃO RECEBERÁ MAIS NOTIFICAÇÕES", Toast.LENGTH_LONG).show();
 			stopService(intent);
+			*/
 			
     		
     		
@@ -217,7 +225,7 @@ public class NOTActivity extends Activity {
     	{
 
     		
-    		 Intent intent = new Intent(NOTActivity.this, ntServico.class);
+    	/*	 Intent intent = new Intent(NOTActivity.this, ntServico.class);
     			//PendingIntent pintent = PendingIntent.getService(CXMActivity.this, 0, intent, 0);
     			AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
@@ -225,6 +233,7 @@ public class NOTActivity extends Activity {
     			
     			  
     		    startService(intent);
+    		    */
     		
     		
     		

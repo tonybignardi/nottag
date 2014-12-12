@@ -9,19 +9,24 @@ import br.com.bign.ferramentas.DetectaConexao;
 import br.com.bign.ferramentas.Nuvem;
 import br.com.bign.model.MTag;
 import br.com.bign.model.MinhaMensagem;
+import br.com.bign.model.Nottag;
 import br.com.bign.nottag.CriaNot;
 import br.com.bign.nottag.VerNot;
 import android.os.Bundle;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 public class ListaMMensagem extends ListActivity {
 
@@ -83,6 +88,47 @@ public class ListaMMensagem extends ListActivity {
 			
 			
 		}
+		
+		ListView lv = getListView();
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int pos, long arg3) {
+				// TODO Auto-generated method stub
+				
+				  
+				AlertDialog.Builder b = new AlertDialog.Builder(
+                         ListaMMensagem.this);
+			     final MinhaMensagem c = (MinhaMensagem) tags.get(pos);
+			    
+                 b.setMessage("Atenção");
+                 b.setTitle("Excluir Notificação");
+                 b.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+
+						
+						
+					}
+				});
+				b.setPositiveButton("Sim",
+                         new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 /// FAZ A ExCLUSAO
+                            cDao.open();
+                            cDao.delete(c);
+                            onResume();
+                        	 dialog.dismiss();
+                             }
+                         });
+                 b.show();
+
+				return true;
+			}
+			
+		});
+
+		
 		
 		
 	}

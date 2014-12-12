@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
       tools:context=".Principal"
     android:orientation="vertical"
-    android:background="#F9EDBD"
+    android:background="@raw/degrade"
      android:padding="10sp" >
     
     <ImageView 
         android:src="@drawable/ico_not_tag"
         android:layout_width="fill_parent"
-        android:layout_height="100sp"
+        android:layout_height="80sp"
         />
 
     <TextView

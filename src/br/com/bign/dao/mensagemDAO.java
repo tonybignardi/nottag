@@ -54,6 +54,7 @@ public class mensagemDAO {
 		
 		
 		
+		
 	}
 	public void delete(mensagem c){
 		long id=c.getmId();

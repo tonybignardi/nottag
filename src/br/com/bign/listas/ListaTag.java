@@ -2,6 +2,8 @@ package br.com.bign.listas;
 
 import java.util.List;
 
+
+
 import br.bign.com.nottag.R;
 import br.com.bign.adapters.AdapterLinha;
 import br.com.bign.dao.NottagDAO;
@@ -12,15 +14,19 @@ import br.com.bign.nottag.SegueTag;
 
 import android.os.Bundle;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 public class ListaTag extends ListActivity {
 
@@ -48,7 +54,48 @@ public class ListaTag extends ListActivity {
 				Toast.makeText(ListaTag.this, "SEM CONEXAO..", Toast.LENGTH_SHORT).show();
 			}
 		
+		
 		}
+		ListView lv = getListView();
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int pos, long arg3) {
+				// TODO Auto-generated method stub
+				
+				  
+				AlertDialog.Builder b = new AlertDialog.Builder(
+                         ListaTag.this);
+			     final Nottag c = (Nottag) tags.get(pos);
+			    
+                 b.setMessage("Atenção");
+                 b.setTitle("Para de Seguir #"+c.getSegueNot()+"?");
+                 b.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+
+						
+						
+					}
+				});
+				b.setPositiveButton("Sim",
+                         new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 /// FAZ A ExCLUSAO
+                            cDao.open();
+                            cDao.delete(c);
+                            onResume();
+                        	 dialog.dismiss();
+                             }
+                         });
+                 b.show();
+
+				return true;
+			}
+			
+		});
+
+		
 	}
 
 	@Override

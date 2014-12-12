@@ -12,6 +12,11 @@
          android:orientation="vertical"
          >
 
+        <ImageView 
+        android:src="@drawable/ico_not_tag"
+        android:layout_width="fill_parent"
+        android:layout_height="80sp"
+        />
 
         <TextView
         android:layout_width="wrap_content"

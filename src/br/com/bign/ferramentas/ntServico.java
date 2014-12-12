@@ -29,12 +29,15 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 public class ntServico extends Service {
@@ -53,7 +56,6 @@ public class ntServico extends Service {
 		i = new Intent(ntServico.this,NOTActivity.class);
 
 			
-		
 		
 		Timer mTimer = new Timer();
 		 
@@ -84,10 +86,7 @@ public class ntServico extends Service {
 	  public int onStartCommand(Intent intent, int flags, int startId) {
 	    //TODO do something useful
 		 
-		DetectaConexao conexao = new DetectaConexao(this);
 		
-		if(!conexao.existeConexao())
-			return 0;
 		 /*
 		
 			if(cl.get(Calendar.MINUTE)%2==0)
@@ -108,14 +107,22 @@ public class ntServico extends Service {
 		 int idM = 0;
 		 AccountManager am = AccountManager.get(this); 
  		 Account[] contas = am.getAccountsByType("com.google");
+ 		Log.i("x","SERVICO "+System.currentTimeMillis());
 		 	try {	
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?email="+contas[0].name);
+		 		
+		 		DetectaConexao conexao = new DetectaConexao(this);
+				
+				if(!conexao.existeConexao())
+					return 0;
+				
+				String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?email="+contas[0].name);
 		 	
 		 	
 			 
 				JSONObject json = new JSONObject(s_json);
 				
-				mensagem = json.getString("MSG");
+				
+				mensagem = json.getString("MSG"); 
 				titulo = json.getString("TITULO");
 				idM = Integer.parseInt(json.getString("IDM"));
 				data = json.getString("DATA");
@@ -128,7 +135,10 @@ public class ntServico extends Service {
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return 0;
+			}catch (NullPointerException e) {
+				// TODO: handle exception
+				return 0;
 			}
 		 	
 		 	if(!mensagem.equals(""))
@@ -141,7 +151,7 @@ public class ntServico extends Service {
 		 		cDao.create(nottag,titulo,mensagem,opcoes,data,idnot,temfoto); 
 		 		cDao.close();
 
-		 		criaNotificacao("#"+nottag, titulo,data,mensagem,idM);
+		 		criaNotificacao("#"+nottag, titulo,data,mensagem,idM,temfoto);
 		 		 
 		 		jaLeu("http://www.bign.com.br/nb/az.php?idm="+idM+"&email="+contas[0].name);
 		 	}
@@ -218,14 +228,17 @@ public class ntServico extends Service {
 			return sb.toString();
 	 
 	}
-	 public void criaNotificacao(String nottag,String titulo,String data,String msg,int idm)
+	 public void criaNotificacao(String nottag,String titulo,String data,String msg,int idm,String temfoto)
 	 {
 		  
 			
 		 
 		Intent iVer = new Intent(ntServico.this,ListaMsg.class); 
 		iVer.putExtra("nottag",nottag.replace("#", ""));
-		PendingIntent iDepois = PendingIntent.getActivity(ntServico.this, 0, iVer, 0);
+		
+		
+		
+		PendingIntent iDepois = PendingIntent.getActivity(ntServico.this, 0, iVer, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		
 		NotificationManager notGer = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -236,7 +249,10 @@ public class ntServico extends Service {
 			
 			n.setContentTitle(titulo);
 			n.setContentText(nottag);
+			n.setAutoCancel(true);
 			n.setSmallIcon(R.drawable.ico_not_tag);
+			
+			
 			n.setContentIntent(iDepois);
 			n.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 			long[] vibrate = { 200, 200,200, 200 };
@@ -244,13 +260,28 @@ public class ntServico extends Service {
 			
 			//n.setSound(Uri.parse(R.raw.watch_this));
 			
-			//.addAction(R.drawable.ic_launcher, "acao1", iDepois)
+			//n.addAction(R.drawable.hash, "Ler", iDepois);
 			//.build();
 			
 			Random r = new Random();		
 			notGer.notify(r.nextInt(999999999),n.build());
 			
 	 }
+	 
+	 public Bitmap getBitmapFromURL(String strURL) {
+		    try {
+		        URL url = new URL(strURL);
+		        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		        connection.setDoInput(true);
+		        connection.connect();
+		        InputStream input = connection.getInputStream();
+		        Bitmap myBitmap = BitmapFactory.decodeStream(input);
+		        return myBitmap;
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        return null;
+		    }
+		}
 	 
 
 }

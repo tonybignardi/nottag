@@ -58,6 +58,10 @@ public class Nuvem  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
+			}
 		 	
 		 	return false;
 		 
@@ -92,6 +96,10 @@ public class Nuvem  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
+			}
 		 	
 	 
 		 
@@ -111,6 +119,7 @@ public class Nuvem  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		 
 		 return resposta;
@@ -172,6 +181,10 @@ public class Nuvem  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
+			}
 		 	
 		
 	}
@@ -195,7 +208,11 @@ public class Nuvem  {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}catch (NullPointerException e) {
+				// TODO: handle exception
+				
 			}
+		 	
 		 	
 		 	return false;
 
@@ -244,6 +261,11 @@ public class Nuvem  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
+			}
+		 	
 		
 	}
 	public boolean podeCriarNotificacao(String nottag, String titulo,
@@ -274,6 +296,10 @@ public class Nuvem  {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
 			}
 		 	
 		return false;
@@ -321,6 +347,10 @@ public class Nuvem  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
+			}
 		 	
 		return false;
 	}
@@ -344,6 +374,10 @@ public class Nuvem  {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
 			}
 		 	
 		return "##";
@@ -387,6 +421,10 @@ public class Nuvem  {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
 			}
 		 	
 		return null;
