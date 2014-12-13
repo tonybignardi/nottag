@@ -17,8 +17,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.bign.com.nottag.R;
+import br.com.bign.dao.ConfigDAO;
 import br.com.bign.dao.mensagemDAO;
 import br.com.bign.listas.ListaMsg;
+import br.com.bign.model.Config;
 import br.com.bign.nottag.NOTActivity;
 import br.com.bign.nottag.VerMsg;
 
@@ -105,9 +107,16 @@ public class ntServico extends Service {
 		 String idnot="";
 		 String temfoto="";
 		 int idM = 0;
-		 AccountManager am = AccountManager.get(this); 
- 		 Account[] contas = am.getAccountsByType("com.google");
- 		Log.i("x","SERVICO "+System.currentTimeMillis());
+		 
+		 ConfigDAO cdao = new ConfigDAO(this);
+		 cdao.open();
+		 Config config = cdao.get("email");
+		 cdao.close();
+ 		if(!config.getValor().equals(""))
+ 		{
+		 
+ 		
+ 		 Log.i("x","SERVICO "+System.currentTimeMillis());
 		 	try {	
 		 		
 		 		DetectaConexao conexao = new DetectaConexao(this);
@@ -115,7 +124,7 @@ public class ntServico extends Service {
 				if(!conexao.existeConexao())
 					return 0;
 				
-				String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?email="+contas[0].name);
+				String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?email="+config.getValor());
 		 	
 		 	
 			 
@@ -153,11 +162,11 @@ public class ntServico extends Service {
 
 		 		criaNotificacao("#"+nottag, titulo,data,mensagem,idM,temfoto);
 		 		 
-		 		jaLeu("http://www.bign.com.br/nb/az.php?idm="+idM+"&email="+contas[0].name);
+		 		jaLeu("http://www.bign.com.br/nb/az.php?idm="+idM+"&email="+config.getValor());
 		 	}
 		 	 
 		 
-		 //Url
+ 		}
 		 
 	    return Service.START_STICKY;
 	    

@@ -73,7 +73,17 @@ public class MTagDAO {
 		 
 		 return notes;
 		 }
-	
+
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		try{	
+			banco.delete(meuBancoHelper.TABELA_MTAG,null,null);
+			}
+			catch(NullPointerException e)
+			{
+				
+			}
+	}
 	
 }
 

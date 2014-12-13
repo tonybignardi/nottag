@@ -153,7 +153,7 @@ public class VerMsg extends Activity {
 				                            	 
 				                            	 if(podeInserir)
 				                            	 {
-				                            	 Nuvem n = new Nuvem();
+				                            	 Nuvem n = new Nuvem(VerMsg.this);
 					                            	 if(n.respondeNot(ops[iMagico],idm,idmensagem,VerMsg.this))
 					                            	 {
 					                            		 

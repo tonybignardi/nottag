@@ -11,10 +11,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import br.com.bign.dao.ConfigDAO;
 import br.com.bign.dao.MTagDAO;
 import br.com.bign.dao.MinhaMensagemDAO;
 import br.com.bign.dao.NottagDAO;
 import br.com.bign.dao.mensagemDAO;
+import br.com.bign.model.Config;
+import br.com.bign.nottag.NOTActivity;
 import br.com.bign.nottag.VerNot;
 
 import android.accounts.Account;
@@ -30,21 +33,27 @@ public class Nuvem  {
 	private long ultimoId;
 	private String ultimaData;
 	private int totalresp;
-	public Nuvem()
+	private String meuEmail;
+	public Nuvem(Context c)
 	{
+		 ConfigDAO cdao = new ConfigDAO(c);
+		 cdao.open();
+		 Config config = cdao.get("email");
+		 meuEmail = config.getValor();
+		 cdao.close();
 		
-			
+ 		 
 	}
 	 public boolean podeSeguirTag(String not,Context c)
 	 {
-		 
+		
 		 
 		 AccountManager am = AccountManager.get(c); 
  		 Account[] contas = am.getAccountsByType("com.google");
 		 	try {	
 		 		
 		 		not=not.replace("#", "");
-		 		String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?segue="+contas[0].name+"&nottag="+not);
+		 		String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?segue="+meuEmail+"&nottag="+not);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
@@ -72,11 +81,10 @@ public class Nuvem  {
 	 {
 		 //TODO 
 		 // BAIXAR DA NUVEM AS TAGS QUE O CARA SEGUE E SALVAR NO BANCO
-		 AccountManager am = AccountManager.get(c); 
- 		 Account[] contas = am.getAccountsByType("com.google");
+	
 		 	try {	
 		 		
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?tags=sigo&email="+contas[0].name);
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?tags=sigo&email="+meuEmail);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
@@ -157,11 +165,9 @@ public class Nuvem  {
 	public void tagsQueCriei(Context c) {
 		// TODO Auto-generated method stub
 		
-		 AccountManager am = AccountManager.get(c); 
- 		 Account[] contas = am.getAccountsByType("com.google");
 		 	try {	
 		 		
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?tags=criei&email="+contas[0].name);
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?tags=criei&email="+meuEmail);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
@@ -191,12 +197,11 @@ public class Nuvem  {
 	public boolean  podeInserirTag(String tag, Context c) {
 		
 		/// O REST TAMBEM INSERE SE PUDER
-		 AccountManager am = AccountManager.get(c); 
- 		 Account[] contas = am.getAccountsByType("com.google");
+		 
 		 	try {	
 		 		
 		 		tag=tag.replace("#", "");
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=pode&nottag="+tag+"&email="+contas[0].name);
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=pode&nottag="+tag+"&email="+meuEmail);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
@@ -229,11 +234,10 @@ public class Nuvem  {
 	public void notsQueCriei(Context c,String nottag) {
 		// TODO Auto-generated method stub
 		
-		 AccountManager am = AccountManager.get(c); 
- 		 Account[] contas = am.getAccountsByType("com.google");
+		 
 		 	try {	
 		 		
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?tags=msg&email="+contas[0].name+"&nottag="+nottag);
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?tags=msg&email="+meuEmail+"&nottag="+nottag);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
@@ -279,7 +283,7 @@ public class Nuvem  {
 		 		titulo=titulo.replace(" ", "+");
 		 		msg=msg.replace(" ", "+");
 		 		opcoes = opcoes.replace(" ", "+");
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=crianot&nottag="+nottag+"&email="+contas[0].name
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=crianot&nottag="+nottag+"&email="+meuEmail
 					 +"&titulo="+titulo+"&msg="+msg+"&opcoes="+opcoes+"&foto="+foto);
 		 	
 	
@@ -318,12 +322,11 @@ public class Nuvem  {
 	}
 	public boolean respondeNot(String resp, String idm,long idMensagem,Context c) {
 		// TODO Auto-generated method stub
-		AccountManager am = AccountManager.get(c); 
-		 Account[] contas = am.getAccountsByType("com.google");
+		
 		 	try {	
 		 		
 
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?responder="+resp+"&idnot="+idm+"&email="+contas[0].name);
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?responder="+resp+"&idnot="+idm+"&email="+meuEmail);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
@@ -362,7 +365,7 @@ public class Nuvem  {
 		 	try {	
 		 		
 
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?contar="+nottag+"&email="+contas[0].name);
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?contar="+nottag+"&email="+meuEmail);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);
@@ -387,11 +390,10 @@ public class Nuvem  {
 		// TODO Auto-generated method stub
 		
 		String resps[] = null;
-		AccountManager am = AccountManager.get(c); 
-		 Account[] contas = am.getAccountsByType("com.google");
+		
 		 	try {	
 
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?contaresp="+idm+"&email="+contas[0].name);
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?contaresp="+idm+"&email="+meuEmail);
 		 	
 	
 				JSONObject json = new JSONObject(s_json);

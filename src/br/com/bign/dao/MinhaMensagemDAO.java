@@ -112,6 +112,17 @@ public class MinhaMensagemDAO {
 		 
 		 return notes;
 	}
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		try{	
+		banco.delete(meuBancoHelper.TABELA_MMSG,null,null);
+		}
+		catch(NullPointerException e)
+		{
+			
+		}
+	}
+			
 	
 	
 }

@@ -87,7 +87,7 @@ public class CriaTag extends Activity {
 					{
 						tn.setEnabled(false);
 						Toast.makeText(CriaTag.this, "VERIFICANDO...", Toast.LENGTH_LONG).show();
-						Nuvem n = new Nuvem();
+						Nuvem n = new Nuvem(CriaTag.this);
 						if(n.podeInserirTag(tn.getEditableText().toString(),_contexto))
 						{
 						

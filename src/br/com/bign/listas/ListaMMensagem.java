@@ -68,7 +68,7 @@ public class ListaMMensagem extends ListActivity {
 			if(d.existeConexao())
 			{
 			Toast.makeText(ListaMMensagem.this, "CARREGANDO MINHAS #NOTS...", Toast.LENGTH_SHORT).show();
-			 Nuvem n = new Nuvem();
+			 Nuvem n = new Nuvem(ListaMMensagem.this);
 			n.notsQueCriei(this,nottag);
 			}
 			else
@@ -81,7 +81,7 @@ public class ListaMMensagem extends ListActivity {
 		
 		if(d.existeConexao())
 		{
-			Nuvem nu = new Nuvem();
+			Nuvem nu = new Nuvem(ListaMMensagem.this);
 			String segui = nu.contaSeguidores(nottag,ListaMMensagem.this);
 			TextView tvcont = (TextView) findViewById(R.id.lMMcontador);
 			tvcont.setText("Você possui "+segui+" seguidores");

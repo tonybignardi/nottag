@@ -87,7 +87,7 @@ public class SegueTag extends Activity {
 					{
 						tn.setEnabled(false);
 						Toast.makeText(SegueTag.this, "VERIFICANDO...", Toast.LENGTH_LONG).show();
-						Nuvem n = new Nuvem();
+						Nuvem n = new Nuvem(SegueTag.this);
 						
 						if(n.podeSeguirTag(tn.getEditableText().toString(),_contexto))
 						{

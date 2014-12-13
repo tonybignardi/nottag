@@ -2,36 +2,51 @@ package br.com.bign.nottag;
 
 
 
+import java.text.ChoiceFormat;
+import java.util.ArrayList;
+
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdRequest; 
 
 import br.bign.com.nottag.R;
+import br.com.bign.dao.ConfigDAO;
 import br.com.bign.dao.mensagemDAO;
 import br.com.bign.ferramentas.ntServico;
 import br.com.bign.listas.ListaMinhas;
 import br.com.bign.listas.ListaTag;
+import br.com.bign.model.Config;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
 
 public class NOTActivity extends Activity {
     /** Called when the activity is first created. */
 	
 	private WebView myWebView;
+	private AlertDialog alerta;
 	
 	 public mensagemDAO cDao;
 	  /* Your ad unit id. Replace with your actual ad unit id. */
@@ -41,7 +56,17 @@ public class NOTActivity extends Activity {
       private RelativeLayout rl;
 	  
 	  
-	
+@Override
+protected void onStart() {
+	// TODO Auto-generated method stub
+	super.onStart();
+	ConfigDAO cdao = new ConfigDAO(this);
+	cdao.open();
+	Config config = cdao.get("email");
+ 	cdao.close();
+ 	TextView tv = (TextView) findViewById(R.id.meuEmail);
+ 	tv.setText(config.getValor());
+}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,72 +123,56 @@ public class NOTActivity extends Activity {
 			}
 		}) ;
        
-        /* myWebView = (WebView) findViewById(R.id.webview);
-        
-
-        
-        WebSettings settings = myWebView.getSettings();
-        //Faz os links abrirem na mesma webview
-        settings.setLoadWithOverviewMode(true);
-        //ignora o view port da pagina
-        settings.setUseWideViewPort(false);
-        //ativa o uso de javascript
-        settings.setJavaScriptEnabled(true);
-        //desabilita os controles de zoom
-        settings.setBuiltInZoomControls(false);
-        //desabilita o zoom de dois taps e o zoom de caixas de texto
-        settings.setSupportZoom(false);
-        //deixa o zoom inicial como longe
-        //settings.setDefaultZoom(ZoomDensity.FAR);
-        
-        myWebView.loadUrl("http://bign.com.br/nb/");
-        
-        myWebView.setWebViewClient(new WebViewClient() {
-        	 
-        	   @Override
-        	   public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        	    view.loadUrl(url);
-        	    return true;
-        	   }
-        	   //Em caso de erro recebido exibimos um html interno 
-        	   public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        		   myWebView.loadUrl("file:///android_asset/erro.html");
-        	    //ouPodemos simplesmente ocultar a wv
-        	    //wv.setVisibility(View.GONE);
-        	   }
-        	  });
-        
-        
-        */
-    
 	   
 		
 	    /// SERVICO
-	    
-	    Intent intent = new Intent(NOTActivity.this, ntServico.class);
-		//PendingIntent pintent = PendingIntent.getService(CXMActivity.this, 0, intent, 0);
-		//AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        ConfigDAO c = new ConfigDAO(this);
+        c.open();
+        if(c.get("email").getValor().equals(""))
+        {
+        	
+        	
+        	ArrayList<String> itens = new ArrayList<String>(); 
+        	 
 
-		//Calendar cal = Calendar.getInstance();
-		
-		//alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 5000, pintent); 
-	    // SERVICO
-	   
-		
-        
-		  //  Toast.makeText(CXMActivity.this, "CONSTRUIU", Toast.LENGTH_LONG).show();
-		
+        	 AccountManager am = AccountManager.get(this); 
+     		 final Account[] contas = am.getAccountsByType("com.google");
+     		 for(int i=0;i<contas.length;i++)
+     		 {
+     			itens.add(contas[i].name);
+     		 }
+     		 
+     		ArrayAdapter adapter = new ArrayAdapter(this, R.layout.linhaemails, itens);
+     		
+     		AlertDialog.Builder builder = new AlertDialog.Builder(this); 
+     		builder.setTitle("Escolha o E-mail para acesso!"); 
+     		builder.setCancelable(false);
+     		
+     		//define o diálogo como uma lista, passa o adapter.
+     		builder.setSingleChoiceItems(adapter, 0, 
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface arg0, int pos) {
+							
+							ConfigDAO c = new ConfigDAO(NOTActivity.this);
+							c.open();
+							c.create("email",contas[pos].name);
+							onStart();
+							
+							alerta.dismiss();
+						}
+					});
+			alerta = builder.create();
+			alerta.show();
+
+     		
+     		
+        }
+	    
+	  
+        Intent intent = new Intent(NOTActivity.this, ntServico.class);
 		  
 	    
 	    startService(intent);
-	    
-	  //  ImageView iv = (ImageView) findViewById(R.id.iconeHome);
-	  //  iv.setImageBitmap(ntServico.getBitmapFromURL("http://bign.com.br/b/dothumb.php?img=arquivos/1180.jpg&w=100"));
-	    
-	    
-	    
-	  
-	    
 		   
     }
     

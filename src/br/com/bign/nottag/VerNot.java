@@ -99,7 +99,7 @@ public class VerNot extends Activity {
 				if(d.existeConexao())
 				{
 				
-					Nuvem n = new Nuvem();
+					Nuvem n = new Nuvem(VerNot.this);
 					contResp = n.contaRespostas(idm,this);
 					totalResp=n.getTotalresp();
 					

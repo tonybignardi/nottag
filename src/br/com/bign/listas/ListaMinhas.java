@@ -49,7 +49,7 @@ public class ListaMinhas extends ListActivity {
 			if(d.existeConexao())
 			{
 			Toast.makeText(ListaMinhas.this, "CARREGANDO MINHAS TAGS...", Toast.LENGTH_SHORT).show();
-			 Nuvem n = new Nuvem();
+			 Nuvem n = new Nuvem(ListaMinhas.this);
 			n.tagsQueCriei(this);
 			}
 			else

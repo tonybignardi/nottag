@@ -160,6 +160,18 @@ ContentValues valores=new ContentValues();
 		 return "";
 		
 	}
+	public void deleteAll() {
+		
+			// TODO Auto-generated method stub
+		try{	
+			banco.delete(meuBancoHelper.TABELA_MSG,null,null);
+			}
+			catch(NullPointerException e)
+			{
+				
+			}
+		
+	}
 	
 	
 }

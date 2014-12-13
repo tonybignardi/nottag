@@ -46,7 +46,7 @@ public class ListaTag extends ListActivity {
 			if(d.existeConexao())
 			{
 			Toast.makeText(ListaTag.this, "CARREGANDO TAGS...", Toast.LENGTH_SHORT).show();	
-			Nuvem n = new Nuvem();
+			Nuvem n = new Nuvem(ListaTag.this);
 			n.tagsQueSigo(this);
 			}
 			else

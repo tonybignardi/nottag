@@ -44,7 +44,6 @@
         android:padding="5sp"
          />
     
-    
      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,6 +72,25 @@
         android:textColor="#000"
         android:padding="5sp"
          />
-  
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:text="Acessando com:"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/meuEmail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:text="email@nottag.com.br"
+        android:textAlignment="center"
+        android:textColor="#F00"
+        android:textSize="14sp" />
 
 </LinearLayout>

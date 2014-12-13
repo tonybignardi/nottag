@@ -17,9 +17,14 @@ public class meuBancoHelper extends SQLiteOpenHelper {
 	
 	public static final String TABELA_MTAG = "mtag";
 	public static final String TABELA_MTAG_ID = "mtagId";
+	
+	public static final String TABELA_CONFIG="config";
+	public static final String TABELA_CONFIG_ID="configId";
 		
 	private static final String BANCO_NOME = "nt.db";
 	private static final int BANCO_VERSAO = 1;
+
+
 	
 	
 	
@@ -30,9 +35,13 @@ public class meuBancoHelper extends SQLiteOpenHelper {
 		// TODO Auto-generated constructor stub
 	}
 
+
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
+		
+	
 		String BANCO_SQL = "create table "+ TABELA_NOT+"("+TABELA_NOT_ID+" integer primary key autoincrement,";
 		BANCO_SQL +="notSegue text not null);";
 		db.execSQL(BANCO_SQL);
@@ -49,6 +58,11 @@ public class meuBancoHelper extends SQLiteOpenHelper {
 		BANCO_SQL +="mtag text not null);";
 		db.execSQL(BANCO_SQL);
 		
+		BANCO_SQL = "create table "+ TABELA_CONFIG+"("+TABELA_CONFIG_ID+" integer primary key autoincrement,";
+		BANCO_SQL +="config text not null,valor text not null);";
+		db.execSQL(BANCO_SQL);
+		
+		
 		
 		
 	}
@@ -60,9 +74,11 @@ public class meuBancoHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABELA_MSG);
 		db.execSQL("DROP TABLE IF EXISTS " + TABELA_MTAG);
 		db.execSQL("DROP TABLE IF EXISTS " + TABELA_MMSG);
+		db.execSQL("DROP TABLE IF EXISTS " + TABELA_CONFIG);
 		
 		onCreate(db);
 		
 	}
+
 
 }

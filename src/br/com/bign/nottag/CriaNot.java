@@ -164,7 +164,7 @@ public class CriaNot extends Activity {
 
 						Toast.makeText(CriaNot.this, "VERIFICANDO...",
 								Toast.LENGTH_LONG).show();
-						Nuvem n = new Nuvem();
+						Nuvem n = new Nuvem(CriaNot.this);
 						String foto = "";
 						if(!localArquivo.equals(""))
 							foto ="S";

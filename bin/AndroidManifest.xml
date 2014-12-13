@@ -61,6 +61,7 @@
                        <activity android:name="br.com.bign.nottag.VerNot"
                   ></activity>
                        
+                       
             <receiver android:name="br.com.bign.ferramentas.ReceptorBoot" android:enabled="true" android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

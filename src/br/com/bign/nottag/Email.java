@@ -1,35 +1,86 @@
 package br.com.bign.nottag;
 
 
+import java.util.ArrayList;
+
 import br.bign.com.nottag.R;
+import br.com.bign.dao.ConfigDAO;
+import br.com.bign.ferramentas.meuBancoHelper;
+import br.com.bign.model.Config;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.view.View.OnClickListener;
 
 
 public class Email extends Activity {
 
+	private AlertDialog alerta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.email);
        
-        try{
-        AccountManager am = AccountManager.get(this); 
-		Account[] contas = am.getAccountsByType("com.google");
+        ConfigDAO cdao = new ConfigDAO(Email.this);
+		 cdao.open();
+		 Config config = cdao.get("email");
+		 cdao.close();
 		
 		TextView tv = (TextView) findViewById(R.id.emailtv);
 		
-		tv.setText(contas[0].name);
-		}catch(Exception e)
-		{
-			Toast.makeText(Email.this, "ERRO AO BUSCAR CONTA GOOGLE", Toast.LENGTH_LONG).show();
-		}
-      
-		        
+		tv.setText(config.getValor());
+		Button bt = (Button) findViewById(R.id.emailAlterar);
+		bt.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+
+				
+				ArrayList<String> itens = new ArrayList<String>(); 
+	        	 
+
+	        	 AccountManager am = AccountManager.get(Email.this); 
+	     		 final Account[] contas = am.getAccountsByType("com.google");
+	     		 for(int i=0;i<contas.length;i++)
+	     		 {
+	     			itens.add(contas[i].name);
+	     		 }
+	     		 
+	     		ArrayAdapter adapter = new ArrayAdapter(Email.this, R.layout.linhaemails, itens);
+	     		
+	     		AlertDialog.Builder builder = new AlertDialog.Builder(Email.this); 
+	     		builder.setTitle("Escolha o E-mail para acesso!"); 
+	     		
+	     		//define o diálogo como uma lista, passa o adapter.
+	     		builder.setSingleChoiceItems(adapter, 0, 
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface arg0, int pos) {
+								
+								ConfigDAO c = new ConfigDAO(Email.this);
+								c.open();
+								c.trocaConfig("email",contas[pos].name);
+								c.trocaUsuario();
+								c.close();
+								alerta.dismiss();
+								finish();
+								
+								
+							}
+						});
+				alerta = builder.create();
+				alerta.show();
+				
+				
+				
+			}
+		});
 		        
 		    
 		

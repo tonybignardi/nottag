@@ -72,6 +72,17 @@ public class NottagDAO {
 		 return notes;
 		 }
 	
+	public void deleteAll() {
+		
+		try{	
+			banco.delete(meuBancoHelper.TABELA_NOT,null,null);
+			}
+			catch(NullPointerException e)
+			{
+				
+			}
+	}
+	
 	
 }
 
