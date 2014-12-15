@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.plus.model.people.Person.AgeRange;
 
 import br.bign.com.nottag.R;
 import br.com.bign.dao.MTagDAO;
@@ -32,10 +33,13 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
@@ -61,6 +65,12 @@ public class CriaNot extends Activity {
 	private String udata;
 	private long idm;
 	private Button bs;
+	private EditText tc;
+	private EditText ts;
+	private DatePicker ad;
+	private TimePicker ah;
+	private boolean agendado=false;
+	private EditText tr;
 
 	@Override
 	protected void onResume() {
@@ -111,6 +121,34 @@ public class CriaNot extends Activity {
 
 			}
 		});
+		
+		Button botaoAgenda = (Button) findViewById(R.id.btAgenda);
+		botaoAgenda.setOnClickListener(new OnClickListener() {
+
+			
+
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				LinearLayout lag = (LinearLayout) findViewById(R.id.apareceAgenda);
+				
+				if(lag.getVisibility()==LinearLayout.VISIBLE)
+				{
+				lag.setVisibility(LinearLayout.GONE);
+				
+				agendado=false;
+				}
+				else
+				{
+					lag.setVisibility(LinearLayout.VISIBLE);
+					agendado=true;
+				
+				
+				}
+				
+				
+
+			}
+		});
 		// / inicio anuncios
 		/*
 		 * adView = new AdView(this); adView.setAdUnitId(AD_UNIT_ID);
@@ -138,10 +176,23 @@ public class CriaNot extends Activity {
 		tt = (EditText) findViewById(R.id.criaTitulo);
 		tm = (EditText) findViewById(R.id.criaMsg);
 		to = (EditText) findViewById(R.id.criaOpcoes);
+		tc = (EditText) findViewById(R.id.criaCerta);
+		ts = (EditText) findViewById(R.id.criaSubTag);
+		ad = (DatePicker) findViewById(R.id.criaData);
+		ah = (TimePicker) findViewById(R.id.criaHora);
+		tr = (EditText) findViewById(R.id.criaLimite);
 
 		tt.setEnabled(true);
 		tm.setEnabled(true);
 		to.setEnabled(true);
+		tc.setEnabled(true);
+		ts.setEnabled(true);
+		ah.setEnabled(true);
+		tr.setEnabled(true);
+		
+		
+		
+		
 		DetectaConexao dc = new DetectaConexao(this);
 		if (dc.existeConexao())
 			podeInserir = true;
@@ -150,6 +201,7 @@ public class CriaNot extends Activity {
 		Button botao = (Button) findViewById(R.id.criaSalvar);
 		botao.setOnClickListener(new OnClickListener() {
 
+
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 
@@ -157,10 +209,15 @@ public class CriaNot extends Activity {
 
 					if (!tt.getEditableText().toString().equals("")
 							&& !tm.getEditableText().toString().equals("")) {
-
+						
 						tt.setEnabled(false);
 						tm.setEnabled(false);
 						to.setEnabled(false);
+						tc.setEnabled(false);
+						ts.setEnabled(false);
+						ah.setEnabled(false);
+						tr.setEnabled(false);
+						
 
 						Toast.makeText(CriaNot.this, "VERIFICANDO...",
 								Toast.LENGTH_LONG).show();
@@ -169,9 +226,17 @@ public class CriaNot extends Activity {
 						if(!localArquivo.equals(""))
 							foto ="S";
 						
+						
+						String dagenda = ad.getDayOfMonth()+"/"+(ad.getMonth()+1)+"/"+ad.getYear()+" "+ah.getCurrentHour()+":"+ah.getCurrentMinute();
+						if(!agendado)
+							dagenda="";
+						
 						if (n.podeCriarNotificacao(nottag, tt.getEditableText()
 								.toString(), tm.getEditableText().toString(),
-								to.getEditableText().toString(),foto, _contexto)) {
+								to.getEditableText().toString(),foto, tc.getEditableText().toString(),ts.getEditableText().toString(),
+								dagenda,
+								Integer.parseInt(tr.getEditableText().toString()),
+								_contexto)) {
 							idm = n.getUltimoId();
 							udata = n.getUltimaData();
 
@@ -217,7 +282,9 @@ public class CriaNot extends Activity {
 							novoNotDAO.create(nottag, tt.getEditableText()
 									.toString(), tm.getEditableText()
 									.toString(), to.getEditableText()
-									.toString(), udata, idm);
+									.toString(), udata, idm,tc.getEditableText().toString(),ts.getEditableText().toString(),
+									ad.getDayOfMonth()+"/"+(ad.getMonth()+1)+"/"+ad.getYear()+" "+ah.getCurrentHour()+":"+ah.getCurrentMinute(),Integer.parseInt(tr.getEditableText().toString())
+									);
 							novoNotDAO.close();
 
 							finish();
@@ -366,11 +433,17 @@ public class CriaNot extends Activity {
 							Toast.makeText(CriaNot.this, msg, Toast.LENGTH_LONG).show();
 							
 							novoNotDAO.open();
+							
+							String dagenda = ad.getDayOfMonth()+"/"+(ad.getMonth()+1)+"/"+ad.getYear()+" "+ah.getCurrentHour()+":"+ah.getCurrentMinute();
+							if(!agendado)
+								dagenda="";
 
 							novoNotDAO.create(nottag, tt.getEditableText()
 									.toString(), tm.getEditableText()
 									.toString(), to.getEditableText()
-									.toString(), udata, idm);
+									.toString(), udata, idm,tc.getEditableText().toString(),ts.getEditableText().toString(),
+									dagenda,Integer.parseInt(tr.getEditableText().toString())
+									);
 							novoNotDAO.close();
 							
 						//	menDAO  = new mensagemDAO(CriaNot.this);

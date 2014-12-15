@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import br.bign.com.nottag.R;
 import br.com.bign.dao.ConfigDAO;
 import br.com.bign.ferramentas.meuBancoHelper;
+import br.com.bign.listas.ListaTag;
 import br.com.bign.model.Config;
+import br.com.bign.model.Nottag;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -63,13 +65,37 @@ public class Email extends Activity {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface arg0, int pos) {
 								
-								ConfigDAO c = new ConfigDAO(Email.this);
-								c.open();
-								c.trocaConfig("email",contas[pos].name);
-								c.trocaUsuario();
-								c.close();
-								alerta.dismiss();
-								finish();
+								final int posicaEscolhida = pos;
+								AlertDialog.Builder b = new AlertDialog.Builder(
+				                         Email.this);
+
+							    
+				                 b.setTitle("Atenção");
+				                 b.setMessage("Isso excluirá as mensagens recebidas!!");
+				                 b.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+									
+									public void onClick(DialogInterface dialog, int which) {
+
+										
+										
+									}
+								});
+								b.setPositiveButton("Sim",
+				                         new DialogInterface.OnClickListener() {
+				                             public void onClick(DialogInterface dialog, int which) {
+				                                 /// FAZ A ExCLUSAO
+				                            	 ConfigDAO c = new ConfigDAO(Email.this);
+				 								c.open();
+				 								c.trocaConfig("email",contas[posicaEscolhida].name);
+				 								c.trocaUsuario();
+				 								c.close();
+				 								alerta.dismiss();
+				 								finish();
+				                             }
+				                         });
+				                 b.show();
+								
+								
 								
 								
 							}

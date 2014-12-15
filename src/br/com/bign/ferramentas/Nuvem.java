@@ -121,6 +121,7 @@ public class Nuvem  {
 		try {
 			url_caminho = new URL(url);
 			con = (HttpURLConnection) url_caminho.openConnection();
+			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			resposta = readStream(con.getInputStream());
 			
 		} catch (Exception e) {
@@ -249,6 +250,10 @@ public class Nuvem  {
 				JSONArray idms = json.getJSONArray("idms");
 				JSONArray opcoes = json.getJSONArray("opcoes");
 				JSONArray datas = json.getJSONArray("datas");
+				JSONArray certas = json.getJSONArray("certas");
+				JSONArray dagendas = json.getJSONArray("dagendas");
+				JSONArray subtags = json.getJSONArray("subtags");
+				JSONArray qresps = json.getJSONArray("qresps");
 				MinhaMensagemDAO cDao = new MinhaMensagemDAO(c);
 				cDao.open();
 				
@@ -256,7 +261,8 @@ public class Nuvem  {
 				for (int i = 0; i < idms.length(); i++) {
 				
 					cDao.create(nottags.getString(i),titulos.getString(i),mensagens.getString(i),
-							opcoes.getString(i),datas.getString(i),idms.getLong(i));
+							opcoes.getString(i),datas.getString(i),idms.getLong(i),certas.getString(i),subtags.getString(i),
+							dagendas.getString(i),qresps.getInt(i));
 
 				}
 				
@@ -272,42 +278,7 @@ public class Nuvem  {
 		 	
 		
 	}
-	public boolean podeCriarNotificacao(String nottag, String titulo,
-			String msg, String opcoes,String foto, Context c) {
-		// TODO Auto-generated method stub
-		
-		AccountManager am = AccountManager.get(c); 
-		 Account[] contas = am.getAccountsByType("com.google");
-		 	try {	
-		 		
-		 		titulo=titulo.replace(" ", "+");
-		 		msg=msg.replace(" ", "+");
-		 		opcoes = opcoes.replace(" ", "+");
-			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=crianot&nottag="+nottag+"&email="+meuEmail
-					 +"&titulo="+titulo+"&msg="+msg+"&opcoes="+opcoes+"&foto="+foto);
-		 	
-	
-				JSONObject json = new JSONObject(s_json);
-				
-				this.ultimaData= json.getString("DATA");
-				this.ultimoId = json.getLong("IDM");
-				
-				if(ultimoId!=0)
-					return true;
-				
-				
-				
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		 	catch (NullPointerException e) {
-				// TODO: handle exception
-				
-			}
-		 	
-		return false;
-	}
+
 	public long getUltimoId() {
 		// TODO Auto-generated method stub
 		return ultimoId;
@@ -436,8 +407,47 @@ public class Nuvem  {
 		// TODO Auto-generated method stub
 		return totalresp;
 	}
+	public boolean podeCriarNotificacao(String nottag, String titulo,
+			String msg, String opcoes, String foto, String certa,
+			String subtag, String dagenda, int qresp,
+			Context c) {
+			
+			try {	
+			 		
+			 		titulo=titulo.replace(" ", "+");
+			 		msg=msg.replace(" ", "+");
+			 		opcoes = opcoes.replace(" ", "+");
+			 		dagenda = dagenda.replace(" ", "+");
+			 		
+			 		
+				 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=crianot&nottag="+nottag+"&email="+meuEmail
+						 +"&titulo="+titulo+"&msg="+msg+"&opcoes="+opcoes+"&foto="+foto+"&certa="+certa+"&subtag="+subtag+"&dagenda="+dagenda+"&qresp="+qresp);
+			 	
+		
+					JSONObject json = new JSONObject(s_json);
+					
+					this.ultimaData= json.getString("DATA");
+					this.ultimoId = json.getLong("IDM");
+					
+					if(ultimoId!=0)
+						return true;
+					
+					
+					
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 	catch (NullPointerException e) {
+					// TODO: handle exception
+					
+				}
+			 	
+			return false;
+		}
+	}
 	
 	
 
 
-}
+

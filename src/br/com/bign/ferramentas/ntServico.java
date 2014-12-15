@@ -179,6 +179,7 @@ public class ntServico extends Service {
 			try {
 				url_caminho = new URL(url);
 				con = (HttpURLConnection) url_caminho.openConnection();
+				con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 				readStream(con.getInputStream());
 				
 			} catch (Exception e) {
@@ -198,6 +199,7 @@ public class ntServico extends Service {
 		try {
 			url_caminho = new URL(url);
 			con = (HttpURLConnection) url_caminho.openConnection();
+			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			resposta = readStream(con.getInputStream());
 			
 		} catch (Exception e) {

@@ -89,6 +89,116 @@
         android:textAlignment="textStart"
         
          />
+    
+           <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resposta Certa"
+        android:textSize="15sp"
+        android:textColor="#000" 
+        />
+    
+    <EditText 
+        android:id="@+id/criaCerta"
+        android:layout_width="fill_parent"
+        android:layout_height="25sp"
+        android:background="#FFF"
+        android:textSize="15sp"
+        android:textAlignment="textStart"
+        
+         />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SubNot"
+        android:textSize="15sp"
+        android:textColor="#000" 
+        />
+    
+    <EditText 
+        android:id="@+id/criaSubTag"
+        android:layout_width="fill_parent"
+        android:layout_height="25sp"
+        android:background="#FFF"
+        android:textSize="15sp"
+        android:textAlignment="textStart"
+        
+         />
+    
+   <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limitar respostas"
+        android:textSize="15sp"
+        android:textColor="#000" 
+        />
+
+ 
+    
+    <EditText 
+        android:id="@+id/criaLimite"
+        android:layout_width="fill_parent"
+        android:layout_height="25sp"
+        android:background="#FFF"
+        android:textSize="15sp"
+        android:textAlignment="textStart"
+        android:inputType="number"
+        android:text="0"
+        
+         />
+    
+     <Button
+        android:layout_marginTop="10sp"
+        android:text="Agendar"
+        android:id="@+id/btAgenda"
+        android:layout_width="fill_parent"
+        android:layout_height="50sp"
+       android:background="#0F0"
+        android:height="20sp"
+        android:textSize="20sp"
+         />
+       <LinearLayout 
+           android:layout_height="match_parent"
+           android:layout_width="fill_parent"
+           android:orientation="vertical"
+           android:id="@+id/apareceAgenda"
+           android:visibility="gone"
+            >
+   <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agendar para data"
+        android:textSize="15sp"
+        android:textColor="#000" 
+        />
+
+   <DatePicker
+       android:id="@+id/criaData"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="#FFF"
+       android:calendarViewShown="false"
+   
+      />
+   
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Hora"
+       android:textColor="#000"
+       android:textSize="15sp" />
+   
+   <TimePicker
+       android:id="@+id/criaHora"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="#FFF" />
+       
+        />
+        </LinearLayout>
+    
     <ImageView
         android:layout_width="80sp"
         android:layout_height="80sp"

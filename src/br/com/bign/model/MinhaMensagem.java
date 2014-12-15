@@ -9,6 +9,11 @@ public class MinhaMensagem {
 	private String opcoes;
 	private String data;
 	private long idm;
+	private String certa;
+	private String subtag;
+	private String dagenda;
+	private int qresp;
+	
 	
 	
 	public String getTitulo() {
@@ -55,6 +60,30 @@ public class MinhaMensagem {
 		// TODO Auto-generated method stub
 		this.idm = idm;
 		
+	}
+	public int getQresp() {
+		return qresp;
+	}
+	public void setQresp(int qresp) {
+		this.qresp = qresp;
+	}
+	public String getDagenda() {
+		return dagenda;
+	}
+	public void setDagenda(String dagenda) {
+		this.dagenda = dagenda;
+	}
+	public String getSubtag() {
+		return subtag;
+	}
+	public void setSubtag(String subtag) {
+		this.subtag = subtag;
+	}
+	public String getCerta() {
+		return certa;
+	}
+	public void setCerta(String certa) {
+		this.certa = certa;
 	}
 	
 	
