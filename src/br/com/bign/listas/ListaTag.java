@@ -36,6 +36,8 @@ public class ListaTag extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 			setContentView(R.layout.listatag);
+			
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 		cDao = new NottagDAO(this);
 		cDao.open();
 		tags = cDao.getAll();
@@ -124,19 +126,27 @@ public class ListaTag extends ListActivity {
 	
 		Intent i = new Intent(ListaTag.this,ListaMsg.class);
 		i.putExtra("nottag", c.getSegueNot());
+		i.putExtra("subtag", "");
 		startActivity(i);
 		
 		
 	}
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.barralistatag, menu);
 		return true;
 	}
 @Override
 public boolean onOptionsItemSelected(MenuItem item) {
 	// TODO Auto-generated method stub
-	if(item.getItemId()==R.id.adiciona)
+	/*if(item.getItemId()==R.id.adiciona)
+	{
+		Intent i = new Intent(ListaTag.this,SegueTag.class);
+		startActivity(i);
+	}
+	*/
+	if(item.getItemId()==R.id.barraSegueTag)
 	{
 		Intent i = new Intent(ListaTag.this,SegueTag.class);
 		startActivity(i);

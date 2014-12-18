@@ -12,6 +12,7 @@ public class MinhaMensagem {
 	private String certa;
 	private String subtag;
 	private String dagenda;
+	private String temfoto;
 	private int qresp;
 	
 	
@@ -84,6 +85,12 @@ public class MinhaMensagem {
 	}
 	public void setCerta(String certa) {
 		this.certa = certa;
+	}
+	public String getTemfoto() {
+		return temfoto;
+	}
+	public void setTemfoto(String temfoto) {
+		this.temfoto = temfoto;
 	}
 	
 	

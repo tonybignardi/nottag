@@ -20,7 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class MinhaMensagemDAO {
 	
 	private SQLiteDatabase banco;
-	private String[] colunas={meuBancoHelper.TABELA_MMSG_ID,"nottag","titulo","msg","opcoes","data","idm","certa","subtag","dagenda","qresp"};
+	private String[] colunas={meuBancoHelper.TABELA_MMSG_ID,"nottag","titulo","msg","opcoes","data","idm","certa","subtag","dagenda","qresp","temfoto"};
 	private meuBancoHelper BancoHelper;
 
 	public MinhaMensagemDAO(Context contexto){
@@ -38,7 +38,7 @@ public class MinhaMensagemDAO {
 		BancoHelper.close();
 	}
 	public void create(String not,String titulo, String msg, String opcoes,String data,long idm, 
-			String certa, String sub, String dagenda, int respostas){
+			String certa, String sub, String dagenda, int respostas,String temfoto){
 		
 		
 		
@@ -54,6 +54,7 @@ public class MinhaMensagemDAO {
 		valores.put("subtag",sub);
 		valores.put("dagenda",dagenda);
 		valores.put("qresp",respostas);
+		valores.put("temfoto",temfoto);
 		banco.insert(meuBancoHelper.TABELA_MMSG,null,valores);
 		
 		
@@ -86,6 +87,9 @@ public class MinhaMensagemDAO {
 			 c.setSubtag(cursor.getString(8));
 			 c.setDagenda(cursor.getString(9));
 			 c.setQresp(cursor.getInt(10));
+			 c.setTemfoto(cursor.getString(11));
+			 
+			 
 				
 			 
 		 
@@ -120,6 +124,7 @@ public class MinhaMensagemDAO {
 			 c.setSubtag(cursor.getString(8));
 			 c.setDagenda(cursor.getString(9));
 			 c.setQresp(cursor.getInt(10));
+			 c.setTemfoto(cursor.getString(11));
 		 
 		 
 			 notes.add(c);

@@ -20,22 +20,39 @@
         android:textColor="#F00"
         android:textAlignment="gravity"
         android:textStyle="bold"
-        android:textSize="30sp" />
+        android:textSize="15sp" />
      
-    <TextView
-        android:layout_width="wrap_content"
+     
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="#NOT"
         android:textColor="#333399"
         android:textAlignment="gravity"
         android:textStyle="bold"
         android:id="@+id/lNot"
-        android:textSize="30sp" />
+        android:textSize="20sp"
+        android:background="#CCC"
+        
+        />
+
+        
+    
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Você possui xx acertos em #"
+        android:textColor="#0A0"
+        android:textAlignment="gravity"
+        android:textStyle="bold" 
+        android:id="@+id/contadorAcertos"/>
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         ></ListView>
+  
     
 </LinearLayout>

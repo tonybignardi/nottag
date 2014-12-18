@@ -47,6 +47,7 @@ public class NOTActivity extends Activity {
 	
 	private WebView myWebView;
 	private AlertDialog alerta;
+	private boolean testando;
 	
 	 public mensagemDAO cDao;
 	  /* Your ad unit id. Replace with your actual ad unit id. */
@@ -72,6 +73,8 @@ protected void onStart() {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         /// inicio anuncios
+        
+    
         
         adView = new AdView(this);
 	    adView.setAdUnitId(AD_UNIT_ID);
@@ -126,8 +129,21 @@ protected void onStart() {
 	   
 		
 	    /// SERVICO
+        
+        
+        
+        if(testando)
+        {
+        	
+        	ConfigDAO  c1 = new ConfigDAO(this);
+        	c1.open();
+        	c1.create("email", "tonybignardi@gmail.com");
+        	c1.close();
+        }
         ConfigDAO c = new ConfigDAO(this);
+        
         c.open();
+        
         if(c.get("email").getValor().equals(""))
         {
         	
@@ -290,6 +306,7 @@ protected void onStart() {
     	return super.onOptionsItemSelected(item);
     }
 
+   
 
 
 

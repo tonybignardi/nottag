@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +41,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class ntServico extends Service {
@@ -106,6 +108,9 @@ public class ntServico extends Service {
 		 String opcoes = "";
 		 String idnot="";
 		 String temfoto="";
+		 String dagenda="";
+		 String subtag="";
+		 String certa="";
 		 int idM = 0;
 		 
 		 ConfigDAO cdao = new ConfigDAO(this);
@@ -139,6 +144,9 @@ public class ntServico extends Service {
 				opcoes = json.getString("OPCOES");
 				idnot = json.getString("IDNOT");
 				temfoto = json.getString("TEMFOTO");
+				certa = json.getString("CERTA");
+				subtag = json.getString("SUBTAG");
+				dagenda = json.getString("DAGENDA");
 				
 				
 				
@@ -157,10 +165,13 @@ public class ntServico extends Service {
 		 		cDao = new mensagemDAO(this); 
 		 		cDao.open();
 		 		
-		 		cDao.create(nottag,titulo,mensagem,opcoes,data,idnot,temfoto); 
+		 		
+		 		cDao.create(nottag,titulo,mensagem,opcoes,data,idnot,temfoto,certa,subtag,dagenda);
+		 		
+
 		 		cDao.close();
 
-		 		criaNotificacao("#"+nottag, titulo,data,mensagem,idM,temfoto);
+		 		criaNotificacao("#"+nottag, titulo,dagenda,mensagem,idnot,temfoto,subtag);
 		 		 
 		 		jaLeu("http://www.bign.com.br/nb/az.php?idm="+idM+"&email="+config.getValor());
 		 	}
@@ -239,7 +250,7 @@ public class ntServico extends Service {
 			return sb.toString();
 	 
 	}
-	 public void criaNotificacao(String nottag,String titulo,String data,String msg,int idm,String temfoto)
+	 public void criaNotificacao(String nottag,String titulo,String data,String msg,String idm,String temfoto,String subtag)
 	 {
 		  
 			
@@ -247,7 +258,9 @@ public class ntServico extends Service {
 		Intent iVer = new Intent(ntServico.this,ListaMsg.class); 
 		iVer.putExtra("nottag",nottag.replace("#", ""));
 		
-		
+		iVer.putExtra("subtag", subtag);
+		if(!subtag.equals(""))
+		subtag=" #"+subtag;
 		
 		PendingIntent iDepois = PendingIntent.getActivity(ntServico.this, 0, iVer, PendingIntent.FLAG_UPDATE_CURRENT);
 		
@@ -259,9 +272,26 @@ public class ntServico extends Service {
 			
 			
 			n.setContentTitle(titulo);
-			n.setContentText(nottag);
+			n.setContentText(nottag+subtag);
 			n.setAutoCancel(true);
+			
+			
 			n.setSmallIcon(R.drawable.ico_not_tag);
+			if(temfoto.equals("S"))
+			{
+				try {
+					n.setLargeIcon(
+					new DownloadIconTask(idm+".jpg",100).execute("http://bign.com.br/b/dothumb.php?img=arquivos/"+idm+".jpg&w=100&h=100").get() 
+					);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
 			
 			
 			n.setContentIntent(iDepois);

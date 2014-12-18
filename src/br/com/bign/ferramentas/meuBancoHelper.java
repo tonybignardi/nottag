@@ -47,11 +47,11 @@ public class meuBancoHelper extends SQLiteOpenHelper {
 		db.execSQL(BANCO_SQL);
 		
 		BANCO_SQL = "create table "+ TABELA_MSG+"("+TABELA_MSG_ID+" integer primary key autoincrement,";
-		BANCO_SQL +="nottag text not null,titulo text not null, msg text not null,opcoes text not null, data text not null, idnot text, resposta text, dataresposta text, temfoto text);";
+		BANCO_SQL +="nottag text not null,titulo text not null, msg text not null,opcoes text not null, data text not null, idnot text, resposta text, dataresposta text, temfoto text,certa text, subtag text, dagenda text);";
 		db.execSQL(BANCO_SQL);
 		
 		BANCO_SQL = "create table "+ TABELA_MMSG+"("+TABELA_MMSG_ID+" integer primary key autoincrement,";
-		BANCO_SQL +="nottag text not null,titulo text not null, msg text not null,opcoes text not null, data text not null, idm integer not null, certa text, subtag text, dagenda text,qresp integer);";
+		BANCO_SQL +="nottag text not null,titulo text not null, msg text not null,opcoes text not null, data text not null, idm integer not null, certa text, subtag text, dagenda text,qresp integer, temfoto text);";
 		db.execSQL(BANCO_SQL);
 		
 		BANCO_SQL = "create table "+ TABELA_MTAG+"("+TABELA_MTAG_ID+" integer primary key autoincrement,";

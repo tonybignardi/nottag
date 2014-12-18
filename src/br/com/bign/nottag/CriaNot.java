@@ -283,7 +283,8 @@ public class CriaNot extends Activity {
 									.toString(), tm.getEditableText()
 									.toString(), to.getEditableText()
 									.toString(), udata, idm,tc.getEditableText().toString(),ts.getEditableText().toString(),
-									ad.getDayOfMonth()+"/"+(ad.getMonth()+1)+"/"+ad.getYear()+" "+ah.getCurrentHour()+":"+ah.getCurrentMinute(),Integer.parseInt(tr.getEditableText().toString())
+									ad.getDayOfMonth()+"/"+(ad.getMonth()+1)+"/"+ad.getYear()+" "+ah.getCurrentHour()+":"+ah.getCurrentMinute(),Integer.parseInt(tr.getEditableText().toString()),
+											foto
 									);
 							novoNotDAO.close();
 
@@ -442,7 +443,7 @@ public class CriaNot extends Activity {
 									.toString(), tm.getEditableText()
 									.toString(), to.getEditableText()
 									.toString(), udata, idm,tc.getEditableText().toString(),ts.getEditableText().toString(),
-									dagenda,Integer.parseInt(tr.getEditableText().toString())
+									dagenda,Integer.parseInt(tr.getEditableText().toString()),"S"
 									);
 							novoNotDAO.close();
 							

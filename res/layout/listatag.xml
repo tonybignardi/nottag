@@ -19,7 +19,8 @@
         android:text="Veja abaixo as Tags que você recebe notificações.."
         android:textColor="#333399"
         android:textAlignment="gravity" />
-
+    
+    
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"

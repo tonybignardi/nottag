@@ -37,6 +37,7 @@ public class ListaMMensagem extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 			setContentView(R.layout.listaminhasmensagens);
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 			Bundle extras = getIntent().getExtras();
 			try
@@ -165,6 +166,10 @@ public class ListaMMensagem extends ListActivity {
 		i.putExtra("msg", c.getMsg());
 		i.putExtra("opcoes", c.getOpcoes());
 		i.putExtra("idm",c.getIdm());
+		i.putExtra("temfoto", c.getTemfoto());
+		i.putExtra("dagenda",c.getDagenda());
+		i.putExtra("certa", c.getCerta());
+		
 		
 		startActivity(i);
 		

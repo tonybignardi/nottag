@@ -2,6 +2,8 @@ package br.com.bign.nottag;
 
 
 
+import java.io.File;
+
 import br.bign.com.nottag.R;
 import br.com.bign.ferramentas.DetectaConexao;
 import br.com.bign.ferramentas.DownloadImageTask;
@@ -15,7 +17,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +29,7 @@ import android.widget.Toast;
 
 public class VerMsg extends Activity {
 	private boolean podeInserir=false;
+	private String certa="";
 
 	@SuppressLint("InlinedApi")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,7 @@ public class VerMsg extends Activity {
 				String opcoes = extras.getString("opcoes");
 				String dataresp = extras.getString("dataresposta");
 				String resp = extras.getString("resposta");
+				certa = extras.getString("certa");
 				String temfoto = extras.getString("temfoto");
 				final String idm = extras.getString("idm");
 				final long idmensagem = extras.getLong("idmensagem");
@@ -81,8 +87,31 @@ public class VerMsg extends Activity {
 				{
 					ImageView iv = (ImageView) findViewById(R.id.imagemNot);
 					iv.setVisibility(ImageView.VISIBLE);
-					new DownloadImageTask(iv).execute("" +
+					new DownloadImageTask(iv,idm+".jpg",400).execute("" +
 							"http://bign.com.br/b/dothumb.php?img=arquivos/"+idm+".jpg&w=400");
+					
+					iv.setOnClickListener(new OnClickListener() {
+						
+						public void onClick(View arg0) {
+							// TODO Auto-generated method stub
+							String s ="/sdcard/"+Environment.DIRECTORY_PICTURES+"/nottag/400"+idm+".jpg";
+							
+						        
+						        File sourceFile = new File(s);
+						        if(sourceFile.isFile())
+						        {
+								Intent intent = new Intent(Intent.ACTION_DEFAULT); 
+								
+								intent.setDataAndType(Uri.fromFile(sourceFile),"image/*");
+								
+								startActivity(intent);
+						        }
+						        else
+						        	Toast.makeText(VerMsg.this, "nao tem arquivo", Toast.LENGTH_LONG).show();
+						        	
+							
+						}
+					});
 					
 				}
 				
@@ -108,11 +137,15 @@ public class VerMsg extends Activity {
 						if(ops[i].equals(resp))
 						{
 						 btn.setBackgroundColor(Color.parseColor("#FF0000"));
+						 
+						
+						 
 						}
 						else
 						{
 							btn.setBackgroundColor(Color.parseColor("#333399"));
 						}
+						
 						
 						
 						 
@@ -159,7 +192,15 @@ public class VerMsg extends Activity {
 					                            		 
 					                            		 btnAcessado.setBackgroundColor(Color.RED);
 					                            		 
+					                            		 if(ops[iMagico].equals(certa) && !certa.equals(""))
+					                            	     Toast.makeText(VerMsg.this, ":) - LEGAL, VOCÊ ACERTOU", Toast.LENGTH_LONG).show();
+					                            		 
+					                            		 if(!ops[iMagico].equals(certa) && !certa.equals(""))
+					                            		 Toast.makeText(VerMsg.this, ":( -  VOCÊ ERROU", Toast.LENGTH_LONG).show();
+					                            		 
+					                            		 if(certa.equals(""))
 					                            		 Toast.makeText(VerMsg.this, "RESPOSTA ("+ops[iMagico]+") ENVIADA... OBRIGADO", Toast.LENGTH_LONG).show();
+					                            		 
 					                            		 finish();
 					                            		 
 					                            		 //
@@ -189,6 +230,11 @@ public class VerMsg extends Activity {
 						});
 						 
 						}
+						else
+						{
+							 if(ops[i].equals(certa))
+									btn.setBackgroundColor(Color.parseColor("#00AA00"));
+						}
 						 
 						 
 						ll.addView(btn);
@@ -206,5 +252,6 @@ public class VerMsg extends Activity {
 			// TODO: handle exception
 		}
 	}
+	
 
 }

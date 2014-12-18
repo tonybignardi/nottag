@@ -17,17 +17,20 @@ public final class R {
         public static final int ico_not_tag=0x7f020003;
     }
     public static final class id {
-        public static final int addBotoes=0x7f08002a;
-        public static final int adiciona=0x7f080033;
+        public static final int addBotoes=0x7f08002c;
+        public static final int adiciona=0x7f080039;
         public static final int apareceAgenda=0x7f080008;
+        public static final int barraCriaTag=0x7f080037;
+        public static final int barraSegueTag=0x7f080038;
         public static final int botaoCamera=0x7f08000c;
         public static final int botaoCriarHome=0x7f080011;
-        public static final int botaoSalvar=0x7f080022;
-        public static final int botaoSalvarMinhaTag=0x7f080020;
+        public static final int botaoSalvar=0x7f080024;
+        public static final int botaoSalvarMinhaTag=0x7f080022;
         public static final int botaoSeguirHome=0x7f080012;
         public static final int btAgenda=0x7f080007;
-        public static final int campoMinhaTag=0x7f08001f;
-        public static final int campoNot=0x7f080021;
+        public static final int campoMinhaTag=0x7f080021;
+        public static final int campoNot=0x7f080023;
+        public static final int contadorAcertos=0x7f08001c;
         public static final int criaCerta=0x7f080004;
         public static final int criaData=0x7f080009;
         public static final int criaHora=0x7f08000a;
@@ -38,45 +41,48 @@ public final class R {
         public static final int criaSalvar=0x7f08000d;
         public static final int criaSubTag=0x7f080005;
         public static final int criaTitulo=0x7f080001;
-        public static final int criaminhanot=0x7f080035;
-        public static final int criar=0x7f08003a;
-        public static final int criatag=0x7f080034;
-        public static final int email=0x7f080038;
+        public static final int criaminhanot=0x7f08003b;
+        public static final int criar=0x7f080040;
+        public static final int criatag=0x7f08003a;
+        public static final int email=0x7f08003e;
         public static final int emailAlterar=0x7f08000f;
         public static final int emailtv=0x7f08000e;
         public static final int iconeHome=0x7f080010;
-        public static final int imagemNot=0x7f080027;
-        public static final int imagemVerNot=0x7f08002f;
+        public static final int iconemsg=0x7f080018;
+        public static final int imagemNot=0x7f080029;
+        public static final int imagemVerNot=0x7f080031;
         public static final int imgUp=0x7f08000b;
-        public static final int lMMcontador=0x7f08001d;
-        public static final int lMMsgNot=0x7f08001c;
-        public static final int lMNot=0x7f08001b;
-        public static final int lNot=0x7f08001a;
+        public static final int lMMcontador=0x7f08001f;
+        public static final int lMMsgNot=0x7f08001e;
+        public static final int lMNot=0x7f08001d;
+        public static final int lNot=0x7f08001b;
         public static final int linhaMinha=0x7f080015;
         public static final int linhaMinhaMsgMsg=0x7f080017;
         public static final int linhaMinhaMsgTitulo=0x7f080016;
-        public static final int linhaMsgMsg=0x7f080019;
-        public static final int linhaMsgTitulo=0x7f080018;
+        public static final int linhaMsgMsg=0x7f08001a;
+        public static final int linhaMsgTitulo=0x7f080019;
         public static final int linhaNot=0x7f080014;
         public static final int meuEmail=0x7f080013;
-        public static final int notificacoes=0x7f080037;
-        public static final int parar=0x7f080036;
-        public static final int sair=0x7f08003b;
-        public static final int seguir=0x7f080039;
-        public static final int space1=0x7f080028;
-        public static final int space2=0x7f080024;
-        public static final int verData=0x7f080026;
-        public static final int verDataResp=0x7f08002b;
-        public static final int verMensagem=0x7f080029;
-        public static final int verNot=0x7f080023;
-        public static final int verTitulo=0x7f080025;
-        public static final int vernotData=0x7f08002e;
-        public static final int vernotMensagem=0x7f080030;
-        public static final int vernotNot=0x7f08002c;
-        public static final int vernotTitulo=0x7f08002d;
-        public static final int vernotaddBotoes=0x7f080031;
-        public static final int webvernot=0x7f080032;
-        public static final int webview=0x7f08001e;
+        public static final int notificacoes=0x7f08003d;
+        public static final int parar=0x7f08003c;
+        public static final int sair=0x7f080041;
+        public static final int seguir=0x7f08003f;
+        public static final int space1=0x7f08002a;
+        public static final int space2=0x7f080026;
+        public static final int verData=0x7f080028;
+        public static final int verDataResp=0x7f08002d;
+        public static final int verMensagem=0x7f08002b;
+        public static final int verNot=0x7f080025;
+        public static final int verTitulo=0x7f080027;
+        public static final int vernotCerta=0x7f080033;
+        public static final int vernotDagenda=0x7f080034;
+        public static final int vernotData=0x7f080030;
+        public static final int vernotMensagem=0x7f080032;
+        public static final int vernotNot=0x7f08002e;
+        public static final int vernotTitulo=0x7f08002f;
+        public static final int vernotaddBotoes=0x7f080035;
+        public static final int webvernot=0x7f080036;
+        public static final int webview=0x7f080020;
     }
     public static final class layout {
         public static final int criaminhanot=0x7f030000;
@@ -86,7 +92,7 @@ public final class R {
         public static final int linhaemails=0x7f030004;
         public static final int linhaminhas=0x7f030005;
         public static final int linhaminhasmensagens=0x7f030006;
-        public static final int linhamsg=0x7f030007;
+        public static final int linhamsgnova=0x7f030007;
         public static final int listamensagens=0x7f030008;
         public static final int listaminhas=0x7f030009;
         public static final int listaminhasmensagens=0x7f03000a;
@@ -98,10 +104,12 @@ public final class R {
         public static final int vernot=0x7f030010;
     }
     public static final class menu {
-        public static final int main=0x7f070000;
-        public static final int menuminha=0x7f070001;
-        public static final int menuminhamsg=0x7f070002;
-        public static final int principal=0x7f070003;
+        public static final int barracriatag=0x7f070000;
+        public static final int barralistatag=0x7f070001;
+        public static final int main=0x7f070002;
+        public static final int menuminha=0x7f070003;
+        public static final int menuminhamsg=0x7f070004;
+        public static final int principal=0x7f070005;
     }
     public static final class raw {
         public static final int degrade=0x7f040000;
@@ -109,6 +117,7 @@ public final class R {
         public static final int imfinal=0x7f040002;
         public static final int imj=0x7f040003;
         public static final int imq=0x7f040004;
+        public static final int search=0x7f040005;
     }
     public static final class string {
         public static final int app_name=0x7f050001;
@@ -120,8 +129,8 @@ public final class R {
         AppBaseTheme from BOTH res/values/styles.xml and
         res/values-v11/styles.xml on API 14+ devices.
     
- API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f060000;
+        public static final int MyActionBar=0x7f060001;
     }
 }

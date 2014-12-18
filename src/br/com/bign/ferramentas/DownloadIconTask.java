@@ -14,27 +14,22 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
 
-public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
+public class DownloadIconTask extends AsyncTask<String, Void, Bitmap> {
 	private String nome;
 	private int width;
 
-    public DownloadImageTask(ImageView bmImage,String nome,int w) {
-        this.bmImage = bmImage;
-        this.nome=nome;
-        this.width=w;
-    }
+
     
-    public DownloadImageTask(String nome) {
-        this.bmImage = bmImage;
-        this.nome=nome;
+    public DownloadIconTask(String nome,int w) {
+         this.nome=nome;
+         this.width=w;
     }
 
     @SuppressLint("NewApi")
 	protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
-        String  src= "/sdcard/"+Environment.DIRECTORY_PICTURES+"/nottag/"+width + nome;
+        String  src= "/sdcard/"+Environment.DIRECTORY_PICTURES+"/nottag/"+width+nome;
         int count;
         File sourceFile = new File(src);
         
@@ -81,7 +76,5 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         return mIcon11;
     }
 
-    protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
-    }
+  
 }

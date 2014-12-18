@@ -12,6 +12,9 @@ public class mensagem {
 	private String dataresp;
 	private String resposta;
 	private String temfoto;
+	private String certa;
+	private String subtag;
+	private String dagenda;
 	
 	public String getTitulo() {
 		return titulo;
@@ -82,6 +85,24 @@ public class mensagem {
 	public void setTemFoto(String temfoto) {
 		// TODO Auto-generated method stub
 		this.temfoto=temfoto;
+	}
+	public String getSubtag() {
+		return subtag;
+	}
+	public void setSubtag(String subtag) {
+		this.subtag = subtag;
+	}
+	public String getDagenda() {
+		return dagenda;
+	}
+	public void setDagenda(String dagenda) {
+		this.dagenda = dagenda;
+	}
+	public String getCerta() {
+		return certa;
+	}
+	public void setCerta(String certa) {
+		this.certa = certa;
 	}
 	
 	

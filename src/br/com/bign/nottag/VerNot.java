@@ -46,20 +46,25 @@ public class VerNot extends Activity {
 				String data = extras.getString("data");
 				String msg = extras.getString("msg");
 				String opcoes = extras.getString("opcoes");
+				String temfoto = extras.getString("temfoto");
+				String dagenda = extras.getString("dagenda");
+				String certa = extras.getString("certa");
 				long idm = extras.getLong("idm");
+				
+				
 				int totalResp=0;
 				
 				 mdao = new mensagemDAO(VerNot.this);
 				 
-			/*	if(mdao.temFoto(idm).equals("S"))
+				if(temfoto.equals("S"))
 				{
 					ImageView iv = (ImageView) findViewById(R.id.imagemVerNot);
 					iv.setVisibility(ImageView.VISIBLE);
-					new DownloadImageTask(iv).execute("" +
+					new DownloadImageTask(iv,idm+".jpg",400).execute("" +
 							"http://bign.com.br/b/dothumb.php?img=arquivos/"+idm+".jpg&w=400");
 					
 				}
-				*/
+				
 				
 				
 		
@@ -96,6 +101,8 @@ public class VerNot extends Activity {
 				
 				DetectaConexao d = new DetectaConexao(this);
 				int contResp[]=null;
+				
+				if(!opcoes.equals(""))
 				if(d.existeConexao())
 				{
 				
@@ -144,6 +151,12 @@ public class VerNot extends Activity {
 				
 				TextView tvm = (TextView) findViewById(R.id.vernotMensagem);
 				tvm.setText(msg);
+				
+				TextView tvdagenda = (TextView) findViewById(R.id.vernotDagenda);
+				tvdagenda.setText("Agendado: "+dagenda);
+				
+				TextView tvcerta = (TextView) findViewById(R.id.vernotCerta);
+				tvcerta.setText("R. Certa: "+certa);
 				
 
 

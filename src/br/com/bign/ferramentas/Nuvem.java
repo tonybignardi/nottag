@@ -254,6 +254,7 @@ public class Nuvem  {
 				JSONArray dagendas = json.getJSONArray("dagendas");
 				JSONArray subtags = json.getJSONArray("subtags");
 				JSONArray qresps = json.getJSONArray("qresps");
+				JSONArray temfoto = json.getJSONArray("temfoto");
 				MinhaMensagemDAO cDao = new MinhaMensagemDAO(c);
 				cDao.open();
 				
@@ -262,7 +263,7 @@ public class Nuvem  {
 				
 					cDao.create(nottags.getString(i),titulos.getString(i),mensagens.getString(i),
 							opcoes.getString(i),datas.getString(i),idms.getLong(i),certas.getString(i),subtags.getString(i),
-							dagendas.getString(i),qresps.getInt(i));
+							dagendas.getString(i),qresps.getInt(i),temfoto.getString(i));
 
 				}
 				

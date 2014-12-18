@@ -1,17 +1,23 @@
 package br.com.bign.listas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.bign.com.nottag.R;
 import br.com.bign.adapters.AdapterLinhaMsg;
+import br.com.bign.dao.ConfigDAO;
 import br.com.bign.dao.mensagemDAO;
 import br.com.bign.model.Nottag;
 import br.com.bign.model.mensagem;
 import br.com.bign.nottag.VerMsg;
 
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,8 +25,11 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +40,18 @@ public class ListaMsg extends ListActivity {
 		mensagemDAO cDao;
 		List<mensagem> msgs;
 		String nottag;
+		private Button tv;
+		private AlertDialog alerta;
+		private TextView tcont;
+		private String subtag;
+				
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 			setContentView(R.layout.listamensagens);
+			
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 		cDao = new mensagemDAO(this);
 		
 		Bundle extras = getIntent().getExtras();
@@ -43,14 +60,101 @@ public class ListaMsg extends ListActivity {
 			if(!extras.isEmpty())
 			{
 				nottag = extras.getString("nottag");
-				TextView tv = (TextView) findViewById(R.id.lNot);
+				subtag = extras.getString("subtag");
+				tv = (Button) findViewById(R.id.lNot);
+				if(subtag.equals("") || !subtag.equals(nottag))
 				tv.setText("#"+nottag);
+				else
+				{
+					tv.setText("#"+nottag+" #"+subtag);
+				}
+				
+				
 				
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 		}
+		
+		tv.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+
+				
+				ArrayList<String> itens = new ArrayList<String>(); 
+	        	 
+
+	        	 
+	     		 cDao.open();
+	     		 final String[] subs = cDao.getSubTags(nottag); 
+	     		 for(int i=0;i<subs.length;i++)
+	     		 {
+	     			if(subs[i].equals("#"))
+	     				subs[i]="#"+nottag;
+	     				
+	     			itens.add(subs[i]);
+	     		 }
+	     		 
+	     		ArrayAdapter adapter = new ArrayAdapter(ListaMsg.this, R.layout.linhaemails, itens);
+	     		
+	     		AlertDialog.Builder builder = new AlertDialog.Builder(ListaMsg.this); 
+	     		builder.setTitle("Escolha uma subtag"); 
+	     		
+	     		//define o diálogo como uma lista, passa o adapter.
+	     		builder.setSingleChoiceItems(adapter, 0, 
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface arg0, int pos) {
+								
+								cDao.open();
+								
+								
+								tv = (Button) findViewById(R.id.lNot);
+								tcont = (TextView) findViewById(R.id.contadorAcertos);
+								
+								subtag=subs[pos].replace("#", "");
+								
+								if(subs[pos].replace("#","").equals(nottag))
+								{
+									msgs = cDao.getAllWhereTag(nottag);
+									tv.setText("#"+nottag);
+									tcont.setText("Você possui "+cDao.countAllWhereTag(nottag)+" acertos");
+								}
+								else
+								{
+									tv.setText("#"+nottag+" "+subs[pos]);
+									msgs = cDao.getAllWhereTagAndSubTag(nottag,subtag);
+									tcont.setText("Você possui "+cDao.countAllWhereTagAndSubTag(nottag,subtag)+" acertos");
+									
+								}
+								
+								
+							
+								alerta.dismiss();
+								
+								
+								
+								ArrayAdapter<mensagem> adapter = new AdapterLinhaMsg(ListaMsg.this, msgs);
+								setListAdapter ( adapter );
+								
+								
+								
+								
+								
+							}
+						});
+				alerta = builder.create();
+				alerta.show();
+				
+				
+				
+			}
+		});	
+		
+		
+		
+		
+		
 		
 		
 		ListView lv = getListView();
@@ -101,8 +205,26 @@ public class ListaMsg extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		cDao.open();
-		msgs = cDao.getAllWhereTag(nottag);
 		
+		tcont = (TextView) findViewById(R.id.contadorAcertos);
+		if(subtag.equals("") || !subtag.equals(nottag))
+		{
+				msgs = cDao.getAllWhereTag(nottag);
+				tv.setText("#"+nottag);
+				tcont.setText("Você possui "+cDao.countAllWhereTag(nottag)+" acertos");
+				
+			
+		}
+		else
+			{
+			msgs = cDao.getAllWhereTagAndSubTag(nottag,subtag);
+				tv.setText("#"+nottag+" #"+subtag);
+				tcont.setText("Você possui "+cDao.countAllWhereTagAndSubTag(nottag,subtag)+" acertos");
+			}
+		
+		
+		
+				
 		
 		
 		ArrayAdapter<mensagem> adapter = new AdapterLinhaMsg(this, msgs);
@@ -126,6 +248,7 @@ public class ListaMsg extends ListActivity {
 		i.putExtra("resposta", c.getResposta());
 		i.putExtra("dataresposta", c.getDataResposta());
 		i.putExtra("temfoto", c.getTemFoto());
+		i.putExtra("certa", c.getCerta());
 		startActivity(i);
 		
 		

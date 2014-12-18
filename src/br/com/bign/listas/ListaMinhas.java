@@ -38,6 +38,7 @@ public class ListaMinhas extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 			setContentView(R.layout.listaminhas);
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 		cDao = new MTagDAO(this);
 		cDao.open();
 		tags = cDao.getAll();
@@ -138,13 +139,22 @@ public class ListaMinhas extends ListActivity {
 	}
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menuminha, menu);
+		//getMenuInflater().inflate(R.menu.menuminha, menu);
+		getMenuInflater().inflate(R.menu.barracriatag, menu);
+		
 		return true;
 	}
 @Override
 public boolean onOptionsItemSelected(MenuItem item) {
 	// TODO Auto-generated method stub
-	if(item.getItemId()==R.id.criatag)
+	/*if(item.getItemId()==R.id.criatag)
+	{
+		Intent i = new Intent(ListaMinhas.this,CriaTag.class);
+		startActivity(i);
+	}
+	*/
+	
+	if(item.getItemId()==R.id.barraCriaTag)
 	{
 		Intent i = new Intent(ListaMinhas.this,CriaTag.class);
 		startActivity(i);

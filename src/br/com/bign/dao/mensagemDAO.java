@@ -20,7 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class mensagemDAO {
 	
 	private SQLiteDatabase banco;
-	private String[] colunas={meuBancoHelper.TABELA_MSG_ID,"nottag","titulo","msg","opcoes","data","idnot","resposta","dataresposta","temfoto"};
+	private String[] colunas={meuBancoHelper.TABELA_MSG_ID,"nottag","titulo","msg","opcoes","data","idnot","resposta","dataresposta","temfoto","certa", "subtag", "dagenda"};
 	private meuBancoHelper BancoHelper;
 
 	public mensagemDAO(Context contexto){
@@ -37,7 +37,8 @@ public class mensagemDAO {
 	// TODO Auto-generated method stub
 		BancoHelper.close();
 	}
-	public void create(String not,String titulo, String msg, String opcoes,String data,String idnot,String temfoto){
+	public void create(String not,String titulo, String msg, String opcoes,String data,String idnot,
+			String temfoto,String certa, String subtag, String dagenda){
 		
 		ContentValues valores=new ContentValues();
 		valores.put("nottag",not);
@@ -49,6 +50,10 @@ public class mensagemDAO {
 		valores.put("resposta", "");
 		valores.put("dataresposta", "");
 		valores.put("temfoto", temfoto);
+		
+		valores.put("certa", certa);
+		valores.put("subtag", subtag);
+		valores.put("dagenda", dagenda);
 		
 		banco.insert(meuBancoHelper.TABELA_MSG,null,valores);
 		
@@ -83,6 +88,10 @@ public class mensagemDAO {
 			 c.setResposta(cursor.getString(7));
 			 c.setDataResposta(cursor.getString(8));
 			 c.setTemFoto(cursor.getString(9));
+
+			 c.setCerta(cursor.getString(10));
+			 c.setSubtag(cursor.getString(11));
+			 c.setDagenda(cursor.getString(12));
 		 
 		 
 			 notes.add(c);
@@ -114,6 +123,10 @@ public class mensagemDAO {
 			 c.setResposta(cursor.getString(7));
 			 c.setDataResposta(cursor.getString(8));
 			 c.setTemFoto(cursor.getString(9));
+			 
+			 c.setCerta(cursor.getString(10));
+			 c.setSubtag(cursor.getString(11));
+			 c.setDagenda(cursor.getString(12));
 		 
 		 
 			 notes.add(c);
@@ -172,6 +185,95 @@ ContentValues valores=new ContentValues();
 			}
 		
 	}
+	public String[] getSubTags(String nottag) {
+		// TODO Auto-generated method stub
+		String[] cdist = {"distinct subtag"};
+		 
+		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MSG , cdist , "nottag='"+nottag+"' and subtag!=''" , null , null , null , "mId DESC",null);
+		 
+		 String[] retorno;
+		 
+		 retorno = new String[cursor.getCount()+1];
+		 cursor . moveToFirst ();
+		 int i = 1;
+		 retorno[0]="#"+nottag;
+		 while (! cursor.isAfterLast ()) {
+			 
+			 if(!cursor.getString(0).equals(""))
+			 {
+			 retorno[i]="#"+cursor.getString(0);
+			 i++;
+			 }
+			 
+		
+		 cursor.moveToNext ();
+		 }
+		 cursor.close ();
+		 
+		 
+		 return retorno;
+		
+	}
+	
+	public List<mensagem> getAllWhereTagAndSubTag(String nottag,String subtag) {
+		// TODO Auto-generated method stub
+		
+		 List <mensagem > notes = new ArrayList <mensagem >() ;
+
+		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MSG , colunas , "nottag='"+nottag+"' and subtag='"+subtag+"'" , null , null , null , "mId DESC",null);
+		 
+		 cursor . moveToFirst ();
+		 while (! cursor.isAfterLast ()) {
+			 
+			 mensagem c = new mensagem();
+			 c.setmId(Integer.parseInt(cursor.getString (0)));
+			 c.setNottag(cursor.getString (1) );
+			 c.setTitulo(cursor.getString(2));
+			 c.setMsg(cursor.getString(3));
+			 c.setOpcoes(cursor.getString(4));
+			 c.setData(cursor.getString(5));
+			 c.setIdm(cursor.getString(6));
+			 c.setResposta(cursor.getString(7));
+			 c.setDataResposta(cursor.getString(8));
+			 c.setTemFoto(cursor.getString(9));
+			 
+			 c.setCerta(cursor.getString(10));
+			 c.setSubtag(cursor.getString(11));
+			 c.setDagenda(cursor.getString(12));
+		 
+		 
+			 notes.add(c);
+		 cursor.moveToNext ();
+		 }
+		 cursor.close ();
+		 
+		 
+		 return notes;
+	}
+	
+	public int countAllWhereTagAndSubTag(String nottag,String subtag)
+	{
+		String[] cdist = {"count(*) as cont"};
+		 
+		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MSG , cdist , "subtag='"+subtag+"' and nottag='"+nottag+"' and resposta=certa and certa!=''" , null , null , null , "mId DESC",null);
+		 
+		 cursor . moveToFirst ();
+		 
+		 return cursor.getInt(0);
+	}
+	
+	public int countAllWhereTag(String nottag)
+	{
+		String[] cdist = {"count(*) as cont"};
+		 
+		 Cursor cursor = banco.query( meuBancoHelper .TABELA_MSG , cdist , "nottag='"+nottag+"' and resposta=certa and certa!=''" , null , null , null , "mId DESC",null);
+		 
+		 cursor . moveToFirst ();
+		 
+		 return cursor.getInt(0);
+	}
+	
+	
 	
 	
 }
