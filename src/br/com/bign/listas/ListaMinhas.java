@@ -16,6 +16,7 @@ import br.com.bign.nottag.SegueTag;
 
 import android.os.Bundle;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+@SuppressLint("NewApi")
 public class ListaMinhas extends ListActivity {
 
 		MTagDAO cDao;
@@ -87,10 +89,18 @@ public class ListaMinhas extends ListActivity {
                          new DialogInterface.OnClickListener() {
                              public void onClick(DialogInterface dialog, int which) {
                                  /// FAZ A ExCLUSAO
-                            cDao.open();
-                            cDao.delete(c);
-                            onResume();
-                        	 dialog.dismiss();
+                            	 Nuvem n = new Nuvem(ListaMinhas.this);
+                            	  if(n.podeExcluirTag(c.getMtag()))
+                            			  {
+			                            	 cDao.open();
+						                      cDao.delete(c);
+						                      onResume();
+						                      dialog.dismiss();
+                            			  }else
+                            			  {
+                            				  dialog.dismiss();
+          	                            	Toast.makeText(ListaMinhas.this, "PROBLEMA AO EXLCUIR.. TENTE MAIS TARDE",Toast.LENGTH_LONG).show();
+                            			  }
                         	 
                              }
                          });

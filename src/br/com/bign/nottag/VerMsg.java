@@ -9,9 +9,7 @@ import br.com.bign.ferramentas.DetectaConexao;
 import br.com.bign.ferramentas.DownloadImageTask;
 import br.com.bign.ferramentas.Nuvem;
 import android.view.View.OnClickListener;
-import android.R.color;
 import android.annotation.SuppressLint;
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -92,6 +90,7 @@ public class VerMsg extends Activity {
 					
 					iv.setOnClickListener(new OnClickListener() {
 						
+						@SuppressLint("NewApi")
 						public void onClick(View arg0) {
 							// TODO Auto-generated method stub
 							String s ="/sdcard/"+Environment.DIRECTORY_PICTURES+"/nottag/400"+idm+".jpg";

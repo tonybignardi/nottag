@@ -113,11 +113,12 @@ public final class R {
     }
     public static final class raw {
         public static final int degrade=0x7f040000;
-        public static final int im=0x7f040001;
-        public static final int imfinal=0x7f040002;
-        public static final int imj=0x7f040003;
-        public static final int imq=0x7f040004;
-        public static final int search=0x7f040005;
+        public static final int degrade_antigo=0x7f040001;
+        public static final int im=0x7f040002;
+        public static final int imfinal=0x7f040003;
+        public static final int imj=0x7f040004;
+        public static final int imq=0x7f040005;
+        public static final int search=0x7f040006;
     }
     public static final class string {
         public static final int app_name=0x7f050001;

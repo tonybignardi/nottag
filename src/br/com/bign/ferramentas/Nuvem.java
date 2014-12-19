@@ -48,9 +48,7 @@ public class Nuvem  {
 	 {
 		
 		 
-		 AccountManager am = AccountManager.get(c); 
- 		 Account[] contas = am.getAccountsByType("com.google");
-		 	try {	
+		 try {	
 		 		
 		 		not=not.replace("#", "");
 		 		String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?segue="+meuEmail+"&nottag="+not);
@@ -121,8 +119,10 @@ public class Nuvem  {
 		try {
 			url_caminho = new URL(url);
 			con = (HttpURLConnection) url_caminho.openConnection();
-			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+			con.setRequestProperty("Accept-Charset", "UTF-8");
+			con.setRequestProperty("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
 			resposta = readStream(con.getInputStream());
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -446,6 +446,71 @@ public class Nuvem  {
 			 	
 			return false;
 		}
+	public boolean podeDeixarTag(String segueNot) {
+		// TODO Auto-generated method stub
+		
+		
+		try {	
+		 		
+		 		
+		 		
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=deixartag&nottag="+segueNot+"&email="+meuEmail);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				
+				String pode= json.getString("PODE");
+				
+				if(pode.equals("1"))
+					return true;
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
+			}
+		 	
+		return false;
+		
+	}
+	
+	public boolean podeExcluirTag(String segueNot) {
+		// TODO Auto-generated method stub
+		
+		
+		try {	
+		 		
+		 		
+		 		
+			 String s_json = pegaHTTP("http://www.bign.com.br/nb/az.php?op=excluirtag&nottag="+segueNot+"&email="+meuEmail);
+		 	
+	
+				JSONObject json = new JSONObject(s_json);
+				
+				String pode= json.getString("PODE");
+				
+				if(pode.equals("1"))
+					return true;
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	catch (NullPointerException e) {
+				// TODO: handle exception
+				
+			}
+		 	
+		return false;
+		
+	}
 	}
 	
 	
